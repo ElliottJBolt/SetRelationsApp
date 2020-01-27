@@ -17,12 +17,13 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         val sizeOfSet = Set_Relation_Generation.setGenerator()
         setText.text = "{${sizeOfSet}}"
+        val newRelation = Set_Relation_Generation.relationGenerator(sizeOfSet)
+        relationText.text = "${newRelation}"
 
 
 
 
 
-        
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

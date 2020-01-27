@@ -37,6 +37,26 @@ object Set_Relation_Generation {
 
     }
 
+    fun relationGenerator(values: MutableList<Int>): MutableList<Int> {
+        var lengthOfSet = values.size
+        var createdRelation: MutableList<Int> = mutableListOf<Int>()
+        var noOfRelationPairs = Random.nextInt(2,6)
+        d("Elliott","noOfRelationPairs = ${noOfRelationPairs}")
+        var y = 0
+
+        do {
+            var number = Random.nextInt(0,lengthOfSet)
+            d("Elliott","number = ${number}")
+            var orderedPairValue = values.elementAt(number)
+            d("Elliott","orderedPairValues = ${orderedPairValue}")
+            createdRelation.add(orderedPairValue)
+            y++
+
+        }while (y < noOfRelationPairs * 2)
+
+        return  createdRelation
+    }
+
     fun reflexive() {
 
     }
