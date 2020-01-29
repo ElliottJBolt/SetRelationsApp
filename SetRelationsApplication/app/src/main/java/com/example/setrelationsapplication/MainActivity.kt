@@ -15,10 +15,40 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+
         val sizeOfSet = Set_Relation_Generation.setGenerator()
-        setText.text = "{${sizeOfSet}}"
+        var j = 0
+        setText.text = "A = {"
+        for (x in sizeOfSet){
+            if (j == sizeOfSet.size - 1){
+                setText.text = setText.text as String + "${sizeOfSet.elementAt(j)}"
+            }else {
+                setText.text = setText.text as String + "${sizeOfSet.elementAt(j)},"
+                j++
+            }
+        }
+        setText.text = setText.text as String + "}"
+
+
         val newRelation = Set_Relation_Generation.relationGenerator(sizeOfSet)
-        relationText.text = "${newRelation}"
+        var i = 0
+        relationText.text = "R = {"
+
+        for(x in newRelation){
+            if(i == 0){
+                relationText.text = relationText.text as String + "(${newRelation.elementAt(i)},"
+            }
+            else if ( i.rem(2) == 1  ) {
+                relationText.text = relationText.text as String + "${newRelation.elementAt(i)})"
+            }
+            else{
+
+                relationText.text = relationText.text as String + ",(${newRelation.elementAt(i)},"
+            }
+            i++
+        }
+        relationText.text = relationText.text as String + "}"
+
 
 
 

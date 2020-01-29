@@ -5,7 +5,7 @@ import kotlin.random.Random
 
 object Set_Relation_Generation {
     fun setGenerator() : MutableList<Int>  {
-        val setLength = Random.nextInt(2, 6)
+        val setLength = Random.nextInt(4, 8)
         val setValues: MutableList<Int> = mutableListOf<Int>()
         var x = 2
         do{
