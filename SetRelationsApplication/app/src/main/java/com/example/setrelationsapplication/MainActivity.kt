@@ -50,9 +50,23 @@ class MainActivity : AppCompatActivity() {
         relationText.text = relationText.text as String + "}"
 
 
+        var reflexiveRelation = Set_Relation_Generation.reflexive(sizeOfSet)
+        reflexiveTest.text = "{"
+        var l = 0
+        for(x in reflexiveRelation){
+            if(l == 0){
+                reflexiveTest.text = reflexiveTest.text as String + "(${reflexiveRelation.elementAt(l)},"
+            }
+            else if ( l.rem(2) == 1  ) {
+                reflexiveTest.text = reflexiveTest.text as String + "${reflexiveRelation.elementAt(l)})"
+            }
+            else{
 
-
-
+                reflexiveTest.text = reflexiveTest.text as String + ",(${reflexiveRelation.elementAt(l)},"
+            }
+            l++
+        }
+        reflexiveTest.text = reflexiveTest.text as String + "}"
 
     }
 
