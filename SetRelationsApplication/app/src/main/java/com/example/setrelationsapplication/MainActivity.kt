@@ -68,6 +68,10 @@ class MainActivity : AppCompatActivity() {
         }
         reflexiveTest.text = reflexiveTest.text as String + "}"
 
+        var symmetricRelation = Set_Relation_Generation.symmetric(sizeOfSet)
+        symmetricTest.text = "$symmetricRelation"
+
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

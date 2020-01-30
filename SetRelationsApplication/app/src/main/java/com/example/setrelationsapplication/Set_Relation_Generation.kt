@@ -4,6 +4,10 @@ import android.util.Log.d
 import kotlin.random.Random
 
 object Set_Relation_Generation {
+    /**
+     * Creates a set to be used to form the relations
+     * @return a list of numbers
+     */
     fun setGenerator(): MutableList<Int> {
         val setLength = Random.nextInt(4, 6)
         val setValues: MutableList<Int> = mutableListOf<Int>()
@@ -57,7 +61,6 @@ object Set_Relation_Generation {
         var reflexiveRelation: MutableList<Int> = mutableListOf<Int>()
 
         var noOfRelationPairs = Random.nextInt(lengthOfSet, 8)
-        d("Elliott", "no of relation pairs: $noOfRelationPairs")
 
         var x = 0
         var y = 0
@@ -68,7 +71,6 @@ object Set_Relation_Generation {
 
         do {
             allReflexiveNum.add(values.elementAt(x))
-            d("Elliott", "$allReflexiveNum")
             x++
         } while (x < values.size)
 
@@ -118,7 +120,84 @@ object Set_Relation_Generation {
 
     }
 
-    fun symmetric() {
+    fun symmetric(values: MutableList<Int>): MutableList<Int> {
+        var lengthOfSet = values.size
+        var symmetricRelation: MutableList<Int> = mutableListOf<Int>()
+
+        var noOfRelationPairs = Random.nextInt(3, 7)
+        var amountOfNumbers = noOfRelationPairs * 2
+        var number = Random.nextInt(0,9)
+
+        do {
+            symmetricRelation.add(number)
+            number = Random.nextInt(0,9)
+        }while (symmetricRelation.size < amountOfNumbers)
+
+
+        var selectNumber = Random.nextInt(0,lengthOfSet)
+        var num1 = values.elementAt(selectNumber)
+        selectNumber = Random.nextInt(0,lengthOfSet)
+        var num2 = values.elementAt(selectNumber)
+
+        if (num2 == num1){
+            do {
+                selectNumber = Random.nextInt(0,lengthOfSet)
+                num2 = selectNumber
+
+            }while (num2 == num1)
+        }
+        d("Elliott","num1: $num1")
+        d("Elliott","num2: $num2")
+
+        var positionPair1 = Random.nextInt(0,amountOfNumbers/2 - 1)
+        symmetricRelation.set(positionPair1,num1)
+
+        var numberOneFirst: Boolean
+        d("Elliott","position1: $positionPair1")
+
+
+        if (positionPair1.rem(2)== 1){
+            symmetricRelation.set(positionPair1-1,num2)
+            numberOneFirst = false
+        }else{
+            symmetricRelation.set(positionPair1+1,num2)
+            numberOneFirst = true
+        }
+
+        var positionPair2 = Random.nextInt(amountOfNumbers/2 ,amountOfNumbers -1)
+
+        if (positionPair2 == (positionPair1 + 1)){
+            do {
+                positionPair2 = Random.nextInt(amountOfNumbers/2 ,amountOfNumbers -1)
+            }while (positionPair2 == positionPair1|| positionPair2 == positionPair1 - 1 ||positionPair2 == positionPair1 + 1)
+        }
+
+        if (numberOneFirst == false && positionPair2.rem(2)==1){
+            do {
+                positionPair2 = Random.nextInt(amountOfNumbers/2 ,amountOfNumbers -1)
+            }while (positionPair2.rem(2)== 1)
+        }else if (numberOneFirst == true && positionPair2.rem(2)==0){
+            do {
+                positionPair2 = Random.nextInt(amountOfNumbers/2 ,amountOfNumbers -1)
+            }while (positionPair2.rem(2)==0)
+        }
+        d("Elliott","position2: $positionPair2")
+
+        symmetricRelation.set(positionPair2,num2)
+
+        if (positionPair2.rem(2)== 0 && numberOneFirst == false){
+            symmetricRelation.set(positionPair2,num1)
+            symmetricRelation.set(positionPair2+1,num2)
+            d("Elliott","First if active")
+
+
+        }else if (positionPair2.rem(2)== 1 && numberOneFirst == true){
+            symmetricRelation.set(positionPair2,num1)
+            symmetricRelation.set(positionPair2-1,num2)
+            d("Elliott","Second if active")
+        }
+        
+        return symmetricRelation
 
     }
 
