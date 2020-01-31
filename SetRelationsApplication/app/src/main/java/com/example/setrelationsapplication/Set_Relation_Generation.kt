@@ -78,9 +78,9 @@ object Set_Relation_Generation {
 
         allReflexiveNum.shuffle()
 
-        val randomNum = Random.nextInt(1,2)
+        val randomNum = Random.nextInt(1, 2)
 
-        if (randomNum.rem(2) == 1){
+        if (randomNum.rem(2) == 1) {
             number = Random.nextInt(0, lengthOfSet)
             actualValue = values.elementAt(number)
             reflexiveRelation.add(actualValue)
@@ -99,7 +99,6 @@ object Set_Relation_Generation {
 
             allReflexiveNum.removeAt(0)
             y++
-
 
 
         } while (y < allReflexNumLength)
@@ -126,82 +125,186 @@ object Set_Relation_Generation {
 
         var noOfRelationPairs = Random.nextInt(3, 7)
         var amountOfNumbers = noOfRelationPairs * 2
-        var number = Random.nextInt(0,9)
+        var number = Random.nextInt(0, 9)
 
         do {
             symmetricRelation.add(number)
-            number = Random.nextInt(0,9)
-        }while (symmetricRelation.size < amountOfNumbers)
+            number = Random.nextInt(0, 9)
+        } while (symmetricRelation.size < amountOfNumbers)
 
 
-        var selectNumber = Random.nextInt(0,lengthOfSet)
+        var selectNumber = Random.nextInt(0, lengthOfSet)
         var num1 = values.elementAt(selectNumber)
-        selectNumber = Random.nextInt(0,lengthOfSet)
+        selectNumber = Random.nextInt(0, lengthOfSet)
         var num2 = values.elementAt(selectNumber)
 
-        if (num2 == num1){
+        if (num2 == num1) {
             do {
-                selectNumber = Random.nextInt(0,lengthOfSet)
+                selectNumber = Random.nextInt(0, lengthOfSet)
                 num2 = selectNumber
 
-            }while (num2 == num1)
+            } while (num2 == num1)
         }
-        d("Elliott","num1: $num1")
-        d("Elliott","num2: $num2")
+        d("Elliott", "num1: $num1")
+        d("Elliott", "num2: $num2")
 
-        var positionPair1 = Random.nextInt(0,amountOfNumbers/2 - 1)
-        symmetricRelation.set(positionPair1,num1)
+        var positionPair1 = Random.nextInt(0, amountOfNumbers / 2 - 1)
+        symmetricRelation.set(positionPair1, num1)
 
         var numberOneFirst: Boolean
-        d("Elliott","position1: $positionPair1")
+        d("Elliott", "position1: $positionPair1")
 
 
-        if (positionPair1.rem(2)== 1){
-            symmetricRelation.set(positionPair1-1,num2)
+        if (positionPair1.rem(2) == 1) {
+            symmetricRelation.set(positionPair1 - 1, num2)
             numberOneFirst = false
-        }else{
-            symmetricRelation.set(positionPair1+1,num2)
+        } else {
+            symmetricRelation.set(positionPair1 + 1, num2)
             numberOneFirst = true
         }
 
-        var positionPair2 = Random.nextInt(amountOfNumbers/2 ,amountOfNumbers -1)
+        var positionPair2 = Random.nextInt(amountOfNumbers / 2, amountOfNumbers - 1)
 
-        if (positionPair2 == (positionPair1 + 1)){
+        if (positionPair2 == (positionPair1 + 1)) {
             do {
-                positionPair2 = Random.nextInt(amountOfNumbers/2 ,amountOfNumbers -1)
-            }while (positionPair2 == positionPair1|| positionPair2 == positionPair1 - 1 ||positionPair2 == positionPair1 + 1)
+                positionPair2 = Random.nextInt(amountOfNumbers / 2, amountOfNumbers - 1)
+            } while (positionPair2 == positionPair1 || positionPair2 == positionPair1 - 1 || positionPair2 == positionPair1 + 1)
         }
 
-        if (numberOneFirst == false && positionPair2.rem(2)==1){
+        if (numberOneFirst == false && positionPair2.rem(2) == 1) {
             do {
-                positionPair2 = Random.nextInt(amountOfNumbers/2 ,amountOfNumbers -1)
-            }while (positionPair2.rem(2)== 1)
-        }else if (numberOneFirst == true && positionPair2.rem(2)==0){
+                positionPair2 = Random.nextInt(amountOfNumbers / 2, amountOfNumbers - 1)
+            } while (positionPair2.rem(2) == 1)
+        } else if (numberOneFirst == true && positionPair2.rem(2) == 0) {
             do {
-                positionPair2 = Random.nextInt(amountOfNumbers/2 ,amountOfNumbers -1)
-            }while (positionPair2.rem(2)==0)
+                positionPair2 = Random.nextInt(amountOfNumbers / 2, amountOfNumbers - 1)
+            } while (positionPair2.rem(2) == 0)
         }
-        d("Elliott","position2: $positionPair2")
+        d("Elliott", "position2: $positionPair2")
 
-        symmetricRelation.set(positionPair2,num2)
+        symmetricRelation.set(positionPair2, num2)
 
-        if (positionPair2.rem(2)== 0 && numberOneFirst == false){
-            symmetricRelation.set(positionPair2,num1)
-            symmetricRelation.set(positionPair2+1,num2)
-            d("Elliott","First if active")
+        if (positionPair2.rem(2) == 0 && numberOneFirst == false) {
+            symmetricRelation.set(positionPair2, num1)
+            symmetricRelation.set(positionPair2 + 1, num2)
+            d("Elliott", "First if active")
 
 
-        }else if (positionPair2.rem(2)== 1 && numberOneFirst == true){
-            symmetricRelation.set(positionPair2,num1)
-            symmetricRelation.set(positionPair2-1,num2)
-            d("Elliott","Second if active")
+        } else if (positionPair2.rem(2) == 1 && numberOneFirst == true) {
+            symmetricRelation.set(positionPair2, num1)
+            symmetricRelation.set(positionPair2 - 1, num2)
+            d("Elliott", "Second if active")
         }
-        
+
         return symmetricRelation
 
     }
 
-    fun transitive() {
+    fun transitive(values: MutableList<Int>): MutableList<Int> {
+        var lengthOfSet = values.size
+        var transitiveRelation: MutableList<Int> = mutableListOf<Int>()
+
+        var noOfRelationPairs = Random.nextInt(3, 5)
+        var amountOfNumbers = noOfRelationPairs * 2
+        var number = Random.nextInt(0, 9)
+
+        do {
+            transitiveRelation.add(number)
+            number = Random.nextInt(0, 9)
+        } while (transitiveRelation.size < amountOfNumbers)
+
+        var i = 0
+        var k = 1
+        var j: MutableList<Int> = mutableListOf<Int>()
+
+        var a: Int
+        var b: Int
+        var c: Int
+
+        var pos1 = 0
+        var pos2 = 1
+        var isTransitive = false
+
+        var yeet = 0
+
+        do {
+            b = transitiveRelation.elementAt(i)
+            d("Elliott", "b:$b")
+
+            if (i.rem(2) == 0) {
+                //Check through odd positions
+
+                do {
+                    j.add(transitiveRelation.elementAt(k))
+                    k = k + 2
+
+                } while (k < amountOfNumbers)
+
+                k = 1
+
+
+                do {
+                    if (j.elementAt(yeet) == b) {
+                        a = transitiveRelation.elementAt(k - 1)
+                        d("Elliott", "a:$a")
+                        c = transitiveRelation.elementAt(i + 1)
+                        do {
+                            if (a == transitiveRelation.elementAt(pos1) && c == transitiveRelation.elementAt(
+                                    pos2
+                                )
+                            ) {
+                                isTransitive = true
+                            }
+                            pos1 = pos1 + 2
+                            pos2 = pos2 + 2
+                            d("Elliott", "isTrans: $isTransitive")
+                        } while (pos2 <= amountOfNumbers - 1)
+
+                    }
+                    k = k + 2
+                    yeet++
+                } while (k <= amountOfNumbers - 1)
+
+            } else {
+                k = 0
+                yeet = 0
+                //Check through even positions
+                d("Elliott", "Wublub")
+
+                do {
+                    j.add(transitiveRelation.elementAt(k))
+                    k = k + 2
+                } while (k <= amountOfNumbers - 2)
+
+                k = 0
+
+                do {
+                    if (j.elementAt(yeet) == b) {
+                        a = transitiveRelation.elementAt(i - 1)
+                        d("Elliott", "second a $a")
+                        c = transitiveRelation.elementAt(k + 1)
+                        do {
+                            if (a == transitiveRelation.elementAt(pos1) && c == transitiveRelation.elementAt(
+                                    pos2
+                                )
+                            ) {
+                                isTransitive = true
+                                d("Elliott", "trans2 $isTransitive")
+                            }
+                            pos1 = pos1 + 2
+                            pos2 = pos2 + 2
+                        } while (pos2 < amountOfNumbers)
+
+                    }
+                    k = k + 2
+                    yeet ++
+                } while (k < amountOfNumbers)
+            }
+            i++
+            d("Elliott", " i $i")
+
+        } while (i < amountOfNumbers)
+        return transitiveRelation
 
     }
 }

@@ -71,6 +71,9 @@ class MainActivity : AppCompatActivity() {
         var symmetricRelation = Set_Relation_Generation.symmetric(sizeOfSet)
         symmetricTest.text = "$symmetricRelation"
 
+        var transitiveRelation = Set_Relation_Generation.transitive(sizeOfSet)
+        transitiveTest.text = "$transitiveRelation"
+
 
     }
 
