@@ -213,27 +213,27 @@ object Set_Relation_Generation {
             number = Random.nextInt(0, 9)
         } while (transitiveRelation.size < amountOfNumbers)
 
-        var i = 0
-        var k = 1
-        var j: MutableList<Int> = mutableListOf<Int>()
+        var i = 0 //Position of b in the relation list
+        var k: Int //Position of other b
+        var j: MutableList<Int> = mutableListOf<Int>() //Variable to see if b's are the same
 
-        var a: Int
-        var b: Int
-        var c: Int
+        var a: Int // a in relation
+        var b: Int // b in relation
+        var c: Int // c in relation
 
-        var pos1 = 0
-        var pos2 = 1
-        var isTransitive = false
+        var pos1 = 0 //position of first a in (a,c)
+        var pos2 = 1 //position of first c in (a,c)
+        var isTransitive = true //whether the relation is transitive or not
 
         var yeet = 0
 
         do {
             b = transitiveRelation.elementAt(i)
             d("Elliott", "b:$b")
+            k = 1
 
             if (i.rem(2) == 0) {
                 //Check through odd positions
-
                 do {
                     j.add(transitiveRelation.elementAt(k))
                     k = k + 2
@@ -248,22 +248,24 @@ object Set_Relation_Generation {
                         a = transitiveRelation.elementAt(k - 1)
                         d("Elliott", "a:$a")
                         c = transitiveRelation.elementAt(i + 1)
+                        d("Elliott", "a:$a")
                         do {
-                            if (a == transitiveRelation.elementAt(pos1) && c == transitiveRelation.elementAt(
+                            if (a != transitiveRelation.elementAt(pos1) && c != transitiveRelation.elementAt(
                                     pos2
                                 )
                             ) {
-                                isTransitive = true
+                                isTransitive = false
+                                break
                             }
                             pos1 = pos1 + 2
                             pos2 = pos2 + 2
                             d("Elliott", "isTrans: $isTransitive")
-                        } while (pos2 <= amountOfNumbers - 1)
+                        } while (pos2 < amountOfNumbers)
 
                     }
                     k = k + 2
                     yeet++
-                } while (k <= amountOfNumbers - 1)
+                } while (k <= amountOfNumbers - 2)
 
             } else {
                 k = 0
@@ -280,30 +282,34 @@ object Set_Relation_Generation {
 
                 do {
                     if (j.elementAt(yeet) == b) {
-                        a = transitiveRelation.elementAt(i - 1)
-                        d("Elliott", "second a $a")
-                        c = transitiveRelation.elementAt(k + 1)
+                        a = transitiveRelation.elementAt(k + 1)
+                        d("Elliott", "a:$a")
+                        c = transitiveRelation.elementAt(i - 1)
+                        d("Elliott", "a:$a")
                         do {
-                            if (a == transitiveRelation.elementAt(pos1) && c == transitiveRelation.elementAt(
+                            if (a != transitiveRelation.elementAt(pos1) && c != transitiveRelation.elementAt(
                                     pos2
                                 )
                             ) {
-                                isTransitive = true
-                                d("Elliott", "trans2 $isTransitive")
+                                isTransitive = false
+                                break
                             }
                             pos1 = pos1 + 2
                             pos2 = pos2 + 2
+                            d("Elliott", "isTrans: $isTransitive")
                         } while (pos2 < amountOfNumbers)
 
                     }
                     k = k + 2
-                    yeet ++
-                } while (k < amountOfNumbers)
+                    yeet++
+                } while (k <= amountOfNumbers - 2)
             }
             i++
             d("Elliott", " i $i")
 
         } while (i < amountOfNumbers)
+        d("Elliott","$isTransitive")
+
         return transitiveRelation
 
     }
