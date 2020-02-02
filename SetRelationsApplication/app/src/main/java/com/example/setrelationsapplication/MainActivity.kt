@@ -1,10 +1,12 @@
 package com.example.setrelationsapplication
 
+import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Button
 
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
@@ -16,7 +18,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        val sizeOfSet = Set_Relation_Generation.setGenerator()
+        logInButton.setOnClickListener {
+            startActivity(Intent(this,ApplicationActivity::class.java))
+        }
+
+        /**val sizeOfSet = Set_Relation_Generation.setGenerator()
         var j = 0
         setText.text = "A = {"
         for (x in sizeOfSet){
@@ -72,7 +78,7 @@ class MainActivity : AppCompatActivity() {
         symmetricTest.text = "$symmetricRelation"
 
         var transitiveRelation = Set_Relation_Generation.transitive(sizeOfSet)
-        transitiveTest.text = "$transitiveRelation"
+        transitiveTest.text = "$transitiveRelation" */
 
 
     }
