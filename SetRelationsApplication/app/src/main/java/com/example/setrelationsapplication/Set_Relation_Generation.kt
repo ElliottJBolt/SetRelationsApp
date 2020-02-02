@@ -225,12 +225,15 @@ object Set_Relation_Generation {
         var pos2 = 1 //position of first c in (a,c)
         var isTransitive = true //whether the relation is transitive or not
 
-        var yeet = 0
+        var positionInJ = 0
 
         do {
             b = transitiveRelation.elementAt(i)
             d("Elliott", "b:$b")
             k = 1
+            positionInJ = 0
+            j.clear()
+
 
             if (i.rem(2) == 0) {
                 //Check through odd positions
@@ -239,12 +242,13 @@ object Set_Relation_Generation {
                     k = k + 2
 
                 } while (k < amountOfNumbers)
+                d("Elliott", "odd j:$j")
 
                 k = 1
 
 
                 do {
-                    if (j.elementAt(yeet) == b) {
+                    if (j.elementAt(positionInJ) == b) {
                         a = transitiveRelation.elementAt(k - 1)
                         d("Elliott", "a:$a")
                         c = transitiveRelation.elementAt(i + 1)
@@ -256,6 +260,8 @@ object Set_Relation_Generation {
                             ) {
                                 isTransitive = false
                                 break
+                            }else if (a == c){
+                                break
                             }
                             pos1 = pos1 + 2
                             pos2 = pos2 + 2
@@ -264,12 +270,12 @@ object Set_Relation_Generation {
 
                     }
                     k = k + 2
-                    yeet++
+                    positionInJ++
                 } while (k <= amountOfNumbers - 2)
 
             } else {
                 k = 0
-                yeet = 0
+                positionInJ = 0
                 //Check through even positions
                 d("Elliott", "Wublub")
 
@@ -277,11 +283,12 @@ object Set_Relation_Generation {
                     j.add(transitiveRelation.elementAt(k))
                     k = k + 2
                 } while (k <= amountOfNumbers - 2)
+                d("Elliott", "even j:$j")
 
                 k = 0
 
                 do {
-                    if (j.elementAt(yeet) == b) {
+                    if (j.elementAt(positionInJ) == b) {
                         a = transitiveRelation.elementAt(k + 1)
                         d("Elliott", "a:$a")
                         c = transitiveRelation.elementAt(i - 1)
@@ -294,6 +301,9 @@ object Set_Relation_Generation {
                                 isTransitive = false
                                 break
                             }
+                            else if (a == c){
+                                break
+                            }
                             pos1 = pos1 + 2
                             pos2 = pos2 + 2
                             d("Elliott", "isTrans: $isTransitive")
@@ -301,7 +311,7 @@ object Set_Relation_Generation {
 
                     }
                     k = k + 2
-                    yeet++
+                    positionInJ++
                 } while (k <= amountOfNumbers - 2)
             }
             i++
