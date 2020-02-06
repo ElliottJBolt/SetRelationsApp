@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "463782424158",
+    "firebase_url": "https://setrelations-a8ae7.firebaseio.com",
+    "project_id": "setrelations-a8ae7",
+    "storage_bucket": "setrelations-a8ae7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:463782424158:android:0e6a7369edbedfbc018ecf",
+        "android_client_info": {
+          "package_name": "com.example.setrelationsapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "463782424158-hgprt6bq3prk2833t8gg4sisp6l8aron.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.setrelationsapplication",
+            "certificate_hash": "5a256f367b6b24b894929eaf46c2f416814423be"
+          }
+        },
+        {
+          "client_id": "463782424158-lp2c4iciglp5rc6snccbqbeq8ccdd21g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlVjSVI9RYCdgDHSDZKsRv5h7xoBdqxII"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "463782424158-lp2c4iciglp5rc6snccbqbeq8ccdd21g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
