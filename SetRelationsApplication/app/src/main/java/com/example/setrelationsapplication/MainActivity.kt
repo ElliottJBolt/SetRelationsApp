@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity() {
 
         logInButton.setOnClickListener {
             signIn(emailText.text.toString(),passwordText.text.toString())
-            startActivity(Intent(this, ApplicationActivity::class.java))
 
         }
 
@@ -101,6 +100,10 @@ class MainActivity : AppCompatActivity() {
         transitiveTest.text = "$transitiveRelation" */
 
 
+    }
+
+    interface Communicator{
+        fun passDataCom(questionType: String)
     }
 
     fun signIn(email: String, password: String) {
@@ -187,7 +190,7 @@ class MainActivity : AppCompatActivity() {
         if (user != null) {
             Toast.makeText(baseContext, "Logging in.",
                 Toast.LENGTH_SHORT).show()
-            //startActivity(Intent(this, ApplicationActivity::class.java))
+            startActivity(Intent(this, ApplicationActivity::class.java))
 
         }else{
             Toast.makeText(baseContext, "Account does not exist.",
