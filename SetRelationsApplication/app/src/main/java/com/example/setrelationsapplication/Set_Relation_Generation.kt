@@ -200,18 +200,18 @@ object Set_Relation_Generation {
 
     }
 
-    fun transitive(values: MutableList<Int>): MutableList<Int> {
-        var lengthOfSet = values.size
-        var transitiveRelation: MutableList<Int> = mutableListOf<Int>()
+    fun transitive(relation: MutableList<Int>): Boolean {
+        //var lengthOfSet = values.size
+        var transitiveRelation = relation
 
         var noOfRelationPairs = Random.nextInt(3, 5)
         var amountOfNumbers = noOfRelationPairs * 2
         var number = Random.nextInt(0, 9)
 
-        do {
+        /**do {
             transitiveRelation.add(number)
             number = Random.nextInt(0, 9)
-        } while (transitiveRelation.size < amountOfNumbers)
+        } while (transitiveRelation.size < amountOfNumbers)*/
 
         var i = 0 //Position of b in the relation list
         var k: Int //Position of other b
@@ -320,7 +320,7 @@ object Set_Relation_Generation {
         } while (i < amountOfNumbers)
         d("Elliott","$isTransitive")
 
-        return transitiveRelation
+        return isTransitive //returns whether the relation is transtive or not
 
     }
 }

@@ -8,23 +8,44 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_question.*
+import kotlin.random.Random
 
 /**
  * A simple [Fragment] subclass.
  */
 class QuestionFragment : Fragment() {
-
-    private var questionChoice: String? = null
+    private var root: View? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view =  inflater.inflate(R.layout.fragment_question, container, false)
+        root =  inflater.inflate(R.layout.fragment_question, container, false)
+
+
+
+        return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         val yeet = arguments?.getString(Choice)
+        var yes: Boolean
         d("Elliott","$yeet")
-        return view
+        questionText.text = questionText.text as String + yeet
+
+        var matchingType = generateQuestion(yeet.toString())
+        yesButton.setOnClickListener {
+            yes = true
+            checkAnswer(matchingType,yes)
+
+        }
+        noButton.setOnClickListener {
+            yes = false
+            checkAnswer(matchingType,yes)
+        }
     }
 
     companion object{
@@ -37,6 +58,103 @@ class QuestionFragment : Fragment() {
             fragment.arguments = args
             return fragment
         }
+
+
+    }
+
+    fun generateQuestion(type:String): Boolean{
+        val style: Int
+        var typeOrNot : Int
+        var set = Set_Relation_Generation.setGenerator()
+        var matchingType = true
+
+        formatSet(set) //formats the set text
+
+        style = 1//Random.nextInt(1,1) //Needs to be changed to until 2 when other question type are implemented
+
+        if(style == 1){
+            if (type == "transitive"){
+                    var relation = Set_Relation_Generation.relationGenerator(set)
+                    formatRelation(relation)
+                    var trans = Set_Relation_Generation.transitive(relation)
+
+                    if (trans == true){
+                        matchingType = true
+                        return matchingType
+
+                    }else{
+                        matchingType = false
+                        return matchingType
+
+                    }
+
+            }else if (type == "reflexive"){
+                typeOrNot = Random.nextInt(1,2)
+
+            }else if (type == "symmetric"){
+                typeOrNot = Random.nextInt(1,2)
+
+            }else{
+                //for mixed questions
+                typeOrNot = Random.nextInt(1,2)
+
+            }
+
+        }
+
+        return matchingType
+
+
+    }
+
+    fun checkAnswer(matchingType:Boolean,choice:Boolean){
+
+        if (matchingType == choice){
+            textView.text = "Correct"
+
+        }else{
+            textView.text = "false"
+
+        }
+
+    }
+
+    fun formatSet(set:MutableList<Int>){
+        val set = set
+        var j = 0
+        setText.text = "A = {"
+        for (x in set){
+            if (j == set.size - 1){
+                setText.text = setText.text as String + "${set.elementAt(j)}"
+            }else {
+                setText.text = setText.text as String + "${set.elementAt(j)},"
+                j++
+            }
+        }
+        setText.text = setText.text as String + "}"
+
+    }
+
+    fun formatRelation(relation:MutableList<Int>){
+        val relation = relation
+        var i = 0
+        relationText.text = "R = {"
+
+        for(x in relation){
+            if(i == 0){
+                relationText.text = relationText.text as String + "(${relation.elementAt(i)},"
+            }
+            else if ( i.rem(2) == 1  ) {
+                relationText.text = relationText.text as String + "${relation.elementAt(i)})"
+            }
+            else{
+
+                relationText.text = relationText.text as String + ",(${relation.elementAt(i)},"
+            }
+            i++
+        }
+        relationText.text = relationText.text as String + "}"
+
     }
 
 
