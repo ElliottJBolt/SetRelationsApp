@@ -238,7 +238,7 @@ object Set_Relation_Generation {
             positionInJ = 0
             j.clear()
 
-            pos1 = 0 
+            pos1 = 0
             pos2 = 1
 
 
