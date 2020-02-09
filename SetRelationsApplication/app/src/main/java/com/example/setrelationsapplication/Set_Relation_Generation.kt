@@ -205,7 +205,11 @@ object Set_Relation_Generation {
         var transitiveRelation = relation
 
         var noOfRelationPairs = Random.nextInt(3, 5)
-        var amountOfNumbers = noOfRelationPairs * 2
+
+        var amountOfNumbers = transitiveRelation.size
+
+
+
         var number = Random.nextInt(0, 9)
 
         /**do {
@@ -233,6 +237,9 @@ object Set_Relation_Generation {
             k = 1
             positionInJ = 0
             j.clear()
+
+            pos1 = 0 
+            pos2 = 1
 
 
             if (i.rem(2) == 0) {
@@ -266,7 +273,7 @@ object Set_Relation_Generation {
                             pos1 = pos1 + 2
                             pos2 = pos2 + 2
                             d("Elliott", "isTrans: $isTransitive")
-                        } while (pos2 < amountOfNumbers)
+                        } while (pos2 < amountOfNumbers - 1)
 
                     }
                     k = k + 2
@@ -306,7 +313,8 @@ object Set_Relation_Generation {
                             }
                             pos1 = pos1 + 2
                             pos2 = pos2 + 2
-                            d("Elliott", "isTrans: $isTransitive")
+                            d("Elliott", "pos1: $pos1")
+                            d("Elliott", "pos2: $pos2")
                         } while (pos2 < amountOfNumbers)
 
                     }

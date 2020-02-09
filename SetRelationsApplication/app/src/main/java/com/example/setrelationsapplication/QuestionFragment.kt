@@ -37,12 +37,25 @@ class QuestionFragment : Fragment() {
         questionText.text = questionText.text as String + yeet
 
         var matchingType = generateQuestion(yeet.toString())
+        var count = 0
+
         yesButton.setOnClickListener {
             yes = true
+            count++
             checkAnswer(matchingType,yes)
+            if (count < 10){
+
+                matchingType = generateQuestion(yeet.toString())
+
+
+            }else{
+                fragmentManager?.popBackStackImmediate()
+
+            }
 
         }
         noButton.setOnClickListener {
+            count++
             yes = false
             checkAnswer(matchingType,yes)
         }
@@ -67,6 +80,7 @@ class QuestionFragment : Fragment() {
         var typeOrNot : Int
         var set = Set_Relation_Generation.setGenerator()
         var matchingType = true
+        var relation: MutableList<Int>
 
         formatSet(set) //formats the set text
 
@@ -74,7 +88,7 @@ class QuestionFragment : Fragment() {
 
         if(style == 1){
             if (type == "transitive"){
-                    var relation = Set_Relation_Generation.relationGenerator(set)
+                    relation = Set_Relation_Generation.relationGenerator(set)
                     formatRelation(relation)
                     var trans = Set_Relation_Generation.transitive(relation)
 
@@ -90,9 +104,28 @@ class QuestionFragment : Fragment() {
 
             }else if (type == "reflexive"){
                 typeOrNot = Random.nextInt(1,2)
+                if(typeOrNot==1){
+                    relation = Set_Relation_Generation.reflexive(set)
+                    formatRelation(relation)
+
+                }else{
+                    relation = Set_Relation_Generation.relationGenerator(set)
+                    formatRelation(relation)
+
+                }
 
             }else if (type == "symmetric"){
                 typeOrNot = Random.nextInt(1,2)
+                if (typeOrNot==1){
+                    relation = Set_Relation_Generation.symmetric(set)
+                    formatRelation(relation)
+
+                }else{
+                    relation = Set_Relation_Generation.relationGenerator(set)
+                    formatRelation(relation)
+
+                }
+
 
             }else{
                 //for mixed questions
@@ -154,6 +187,13 @@ class QuestionFragment : Fragment() {
             i++
         }
         relationText.text = relationText.text as String + "}"
+
+    }
+
+    private fun replaceFragment(fragment: Fragment){
+        fragmentManager?.beginTransaction()?.replace(R.id.frameLayout, fragment)
+            ?.addToBackStack(null)
+            ?.commit()
 
     }
 
