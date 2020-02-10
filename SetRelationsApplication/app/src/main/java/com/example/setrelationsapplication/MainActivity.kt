@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
 
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
@@ -22,10 +23,17 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
+        //Get instance of firestore database
+        val db = FirebaseFirestore.getInstance()
+
 
 
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
+        // Access a Cloud Firestore instance from your Activity
+
+
+
 
 
         logInButton.setOnClickListener {
@@ -35,6 +43,19 @@ class MainActivity : AppCompatActivity() {
 
         createAccountButton.setOnClickListener {
             createAccount(emailText.text.toString(),passwordText.text.toString())
+            val email = emailText.text.toString()
+            val user = mapOf(
+                "e-mail" to email
+            )
+
+            db.collection("users")
+                .add(user)
+                .addOnSuccessListener { documentReference ->
+                    d( "db","DocumentSnapshot added with ID: ${documentReference.id}")
+                }
+                .addOnFailureListener { e ->
+                    d( "db","Error adding document")
+                }
         }
 
 
@@ -148,7 +169,9 @@ class MainActivity : AppCompatActivity() {
                     // Sign in success, update UI with the signed-in user's information
                     d("Elliott","SignInWithEmail: Success")
                     val user = auth.currentUser
-                    updateUI(user)
+                    Toast.makeText(baseContext, "Account created.",
+                        Toast.LENGTH_SHORT).show()
+                    resetUI()
                 } else {
                     // If sign in fails, display a message to the user.
                     d("Elliott","signInWithEmail: failure",task.exception)
@@ -183,6 +206,11 @@ class MainActivity : AppCompatActivity() {
 
         return valid
 
+    }
+
+    private fun resetUI(){
+        emailText.text.clear()
+        passwordText.text.clear()
     }
 
     private fun updateUI(user: FirebaseUser?){
