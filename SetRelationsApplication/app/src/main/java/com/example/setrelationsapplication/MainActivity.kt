@@ -49,9 +49,9 @@ class MainActivity : AppCompatActivity() {
             )
 
             db.collection("users")
-                .add(user)
+                .document(email).set(user)
                 .addOnSuccessListener { documentReference ->
-                    d( "db","DocumentSnapshot added with ID: ${documentReference.id}")
+                   // d( "db","DocumentSnapshot added with ID: ${documentReference.id}")
                 }
                 .addOnFailureListener { e ->
                     d( "db","Error adding document")
@@ -171,7 +171,8 @@ class MainActivity : AppCompatActivity() {
                     val user = auth.currentUser
                     Toast.makeText(baseContext, "Account created.",
                         Toast.LENGTH_SHORT).show()
-                    resetUI()
+                    updateUI(user)
+                    //resetUI()
                 } else {
                     // If sign in fails, display a message to the user.
                     d("Elliott","signInWithEmail: failure",task.exception)
@@ -218,7 +219,9 @@ class MainActivity : AppCompatActivity() {
         if (user != null) {
             Toast.makeText(baseContext, "Logging in.",
                 Toast.LENGTH_SHORT).show()
-            startActivity(Intent(this, ApplicationActivity::class.java))
+            val intent = (Intent(this, ApplicationActivity::class.java))
+            intent.putExtra("user",emailText.text.toString())
+            startActivity(intent)
 
         }else{
             Toast.makeText(baseContext, "Account does not exist.",

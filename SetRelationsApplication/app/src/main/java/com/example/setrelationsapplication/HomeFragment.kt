@@ -19,6 +19,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         var view = inflater.inflate(R.layout.fragment_home, container, false)
        var choice : String
 
@@ -26,6 +27,7 @@ class HomeFragment : Fragment() {
             choice = "transitive"
             val questionFragment = QuestionFragment.newInstance(choice)
             replaceFragment(questionFragment)
+
 
 
 

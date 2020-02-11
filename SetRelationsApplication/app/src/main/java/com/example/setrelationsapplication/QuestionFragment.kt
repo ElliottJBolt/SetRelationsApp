@@ -15,6 +15,7 @@ import kotlin.random.Random
  */
 class QuestionFragment : Fragment() {
     private var root: View? = null
+    private var numCorrectAnswers = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,6 +23,7 @@ class QuestionFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         root =  inflater.inflate(R.layout.fragment_question, container, false)
+        numCorrectAnswers = 0
 
 
 
@@ -30,6 +32,7 @@ class QuestionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
 
         val yeet = arguments?.getString(Choice)
         var yes: Boolean
@@ -58,6 +61,17 @@ class QuestionFragment : Fragment() {
             count++
             yes = false
             checkAnswer(matchingType,yes)
+
+            if (count < 10){
+
+                matchingType = generateQuestion(yeet.toString())
+
+
+            }else{
+                fragmentManager?.popBackStackImmediate()
+
+
+            }
         }
     }
 
@@ -144,6 +158,7 @@ class QuestionFragment : Fragment() {
 
         if (matchingType == choice){
             textView.text = "Correct"
+            numCorrectAnswers ++
 
         }else{
             textView.text = "false"
