@@ -107,12 +107,14 @@ class HomeFragment : Fragment() {
                 val questionFragment = QuestionFragment.newInstance(choice,intMixed)
                 replaceFragment(questionFragment)
             }
+
+            resultsButton.setOnClickListener {
+                val resultFragment = ResultsFragment.newInstance(user,intTrans,intSymm,intRef,intMixed)
+                replaceFragment(resultFragment)
+            }
         }
 
-        resultsButton.setOnClickListener {
-            val resultFragment = ResultsFragment.newInstance(user)
-            replaceFragment(resultFragment)
-        }
+
 
 
     }
