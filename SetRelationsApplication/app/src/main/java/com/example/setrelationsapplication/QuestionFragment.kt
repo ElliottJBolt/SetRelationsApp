@@ -7,8 +7,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_question.*
+import kotlinx.android.synthetic.main.fragment_question.view.*
 import kotlin.random.Random
+
 
 /**
  * A simple [Fragment] subclass.
@@ -16,6 +19,7 @@ import kotlin.random.Random
 class QuestionFragment : Fragment() {
     private var root: View? = null
     private var numCorrectAnswers = 0
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,21 +30,32 @@ class QuestionFragment : Fragment() {
         numCorrectAnswers = 0
 
 
-
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        val user = (activity as ApplicationActivity).getUser()
 
         val yeet = arguments?.getString(Choice)
+        var numAttempts = arguments?.getInt(Attempts)
+
+        val dataBase = FirebaseFirestore.getInstance()
+
+
+
         var yes: Boolean
         d("Elliott","$yeet")
-        questionText.text = questionText.text as String + yeet
 
         var matchingType = generateQuestion(yeet.toString())
+
+        questionText.text = questionText.text as String + yeet
+
         var count = 0
+        val userToString = user.toString()
+
+        var numCorrectAnswersToString: String
+
 
         yesButton.setOnClickListener {
             yes = true
@@ -52,6 +67,11 @@ class QuestionFragment : Fragment() {
 
 
             }else{
+                val score = mapOf(
+                    "score " + numAttempts  to numCorrectAnswers
+                )
+                d("Elliott","$user")
+                dataBase.collection("users").document(userToString).collection("questions").document(yeet.toString()).update(score)
                 fragmentManager?.popBackStackImmediate()
 
             }
@@ -61,6 +81,8 @@ class QuestionFragment : Fragment() {
             count++
             yes = false
             checkAnswer(matchingType,yes)
+            numCorrectAnswersToString = numCorrectAnswers.toString()
+
 
             if (count < 10){
 
@@ -68,8 +90,13 @@ class QuestionFragment : Fragment() {
 
 
             }else{
+                val score = mapOf(
+                    "score " + numAttempts  to numCorrectAnswers
+                )
+                d("Elliott","$user")
+                dataBase.collection("users").document(userToString).collection("questions").document(yeet.toString()).update(score)
+                numAttempts = numAttempts?.plus(1)
                 fragmentManager?.popBackStackImmediate()
-
 
             }
         }
@@ -77,11 +104,13 @@ class QuestionFragment : Fragment() {
 
     companion object{
         private val Choice = "choice"
+        private val Attempts = "attempts"
 
-        fun newInstance(choice: String): QuestionFragment{
+        fun newInstance(choice: String,attempts: Int?): QuestionFragment{
             val fragment = QuestionFragment()
             val args = Bundle()
             args.putString(Choice,choice)
+            attempts?.let { args.putInt(Attempts, it) }
             fragment.arguments = args
             return fragment
         }
@@ -211,8 +240,6 @@ class QuestionFragment : Fragment() {
             ?.commit()
 
     }
-
-
 
 
 }

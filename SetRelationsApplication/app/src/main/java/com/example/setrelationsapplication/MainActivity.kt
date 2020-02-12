@@ -34,8 +34,6 @@ class MainActivity : AppCompatActivity() {
 
 
 
-
-
         logInButton.setOnClickListener {
             signIn(emailText.text.toString(),passwordText.text.toString())
 
@@ -45,7 +43,11 @@ class MainActivity : AppCompatActivity() {
             createAccount(emailText.text.toString(),passwordText.text.toString())
             val email = emailText.text.toString()
             val user = mapOf(
-                "e-mail" to email
+                "e-mail" to email,
+                "mixedAttempts" to "0",
+                "refAttempts" to "0",
+                "symmAttempts" to "0",
+                "transAttempts" to "0"
             )
 
             db.collection("users")
@@ -56,6 +58,11 @@ class MainActivity : AppCompatActivity() {
                 .addOnFailureListener { e ->
                     d( "db","Error adding document")
                 }
+
+
+
+
+
         }
 
 
@@ -171,6 +178,14 @@ class MainActivity : AppCompatActivity() {
                     val user = auth.currentUser
                     Toast.makeText(baseContext, "Account created.",
                         Toast.LENGTH_SHORT).show()
+                    val firstScore = mapOf(
+                        "score 1" to 0
+                    )
+                    val db = FirebaseFirestore.getInstance()
+                    db.collection("users").document(email).collection("questions").document("transitive").set(firstScore)
+                    db.collection("users").document(email).collection("questions").document("reflexive").set(firstScore)
+                    db.collection("users").document(email).collection("questions").document("symmetric").set(firstScore)
+                    db.collection("users").document(email).collection("questions").document("mixed").set(firstScore)
                     updateUI(user)
                     //resetUI()
                 } else {
@@ -220,7 +235,9 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(baseContext, "Logging in.",
                 Toast.LENGTH_SHORT).show()
             val intent = (Intent(this, ApplicationActivity::class.java))
-            intent.putExtra("user",emailText.text.toString())
+            val test = emailText.text.toString()
+            d("user","$test")
+            intent.putExtra("user",test)
             startActivity(intent)
 
         }else{
