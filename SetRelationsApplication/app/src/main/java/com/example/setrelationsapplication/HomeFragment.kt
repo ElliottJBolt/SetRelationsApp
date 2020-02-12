@@ -109,6 +109,12 @@ class HomeFragment : Fragment() {
             }
         }
 
+        resultsButton.setOnClickListener {
+            val resultFragment = ResultsFragment.newInstance(user)
+            replaceFragment(resultFragment)
+        }
+
+
     }
 
     private fun replaceFragment(fragment: Fragment){
