@@ -7,7 +7,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isGone
+import androidx.core.view.isInvisible
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.fragment_question.*
 import kotlinx.android.synthetic.main.fragment_question.view.*
 import kotlin.random.Random
@@ -44,6 +47,10 @@ class QuestionFragment : Fragment() {
 
 
 
+
+
+
+
         var yes: Boolean
         d("Elliott","$yeet")
 
@@ -56,12 +63,17 @@ class QuestionFragment : Fragment() {
 
         var numCorrectAnswersToString: String
 
+        var result:String
+
 
         yesButton.setOnClickListener {
             yes = true
             count++
-            checkAnswer(matchingType,yes)
+            result = checkAnswer(matchingType,yes)
+            val feedback = FeedbackFragment.newInstance(result)
             if (count < 10){
+                //childFragmentManager.beginTransaction().replace(R.id.feedbackFrame,feedback).commit()
+
 
                 matchingType = generateQuestion(yeet.toString())
 
@@ -183,17 +195,20 @@ class QuestionFragment : Fragment() {
 
     }
 
-    fun checkAnswer(matchingType:Boolean,choice:Boolean){
+    fun checkAnswer(matchingType:Boolean,choice:Boolean):String{
+        var result: String
 
         if (matchingType == choice){
-            textView.text = "Correct"
+            result = "Correct"
+            textView.text = result
             numCorrectAnswers ++
 
         }else{
-            textView.text = "false"
+            result = "Incorrect"
+            textView.text = result
 
         }
-
+        return result
     }
 
     fun formatSet(set:MutableList<Int>){
