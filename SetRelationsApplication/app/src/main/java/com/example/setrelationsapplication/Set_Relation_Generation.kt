@@ -259,7 +259,7 @@ object Set_Relation_Generation {
                         a = transitiveRelation.elementAt(k - 1)
                         d("Elliott", "a:$a")
                         c = transitiveRelation.elementAt(i + 1)
-                        d("Elliott", "a:$a")
+                        d("Elliott", "c:$c")
                         do {
                             if (a != transitiveRelation.elementAt(pos1) && c != transitiveRelation.elementAt(
                                     pos2

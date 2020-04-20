@@ -35,7 +35,9 @@ class FeedbackFragment : Fragment() {
         if (result == "Correct"){
             root?.setBackgroundColor(Color.parseColor("#00ff00"))
 
-
+        }
+        nextButton.setOnClickListener {
+            fragmentManager?.popBackStackImmediate()
         }
     }
 

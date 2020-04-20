@@ -1,6 +1,7 @@
 package com.example.setrelationsapplication
 
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log.d
 import androidx.fragment.app.Fragment
@@ -24,6 +25,8 @@ class QuestionFragment : Fragment() {
     private var numCorrectAnswers = 0
 
 
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -31,6 +34,8 @@ class QuestionFragment : Fragment() {
         // Inflate the layout for this fragment
         root =  inflater.inflate(R.layout.fragment_question, container, false)
         numCorrectAnswers = 0
+
+
 
 
         return root
@@ -44,6 +49,7 @@ class QuestionFragment : Fragment() {
         var numAttempts = arguments?.getInt(Attempts)
 
         val dataBase = FirebaseFirestore.getInstance()
+
 
 
 
@@ -68,11 +74,15 @@ class QuestionFragment : Fragment() {
 
         yesButton.setOnClickListener {
             yes = true
+
             count++
             result = checkAnswer(matchingType,yes)
             val feedback = FeedbackFragment.newInstance(result)
             if (count < 10){
-                //childFragmentManager.beginTransaction().replace(R.id.feedbackFrame,feedback).commit()
+                childFragmentManager.beginTransaction().replace(R.id.feedbackFrame,feedback).commit()
+                //val feedbackFragment = FeedbackFragment.newInstance(result)
+                //replaceFragment(feedbackFragment)
+
 
 
                 matchingType = generateQuestion(yeet.toString())
@@ -99,6 +109,7 @@ class QuestionFragment : Fragment() {
             if (count < 10){
 
                 matchingType = generateQuestion(yeet.toString())
+
 
 
             }else{
