@@ -3,6 +3,7 @@ package com.example.setrelationsapplication
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -29,11 +30,15 @@ class FeedbackFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val result = arguments?.getString(Result)
+        val set = arguments?.getIntegerArrayList(SetValues)
 
         resultText.text = result
+        textView2.setText(set.toString())
+
+        Log.d("SetTest", "$set")
 
         if (result == "Correct"){
-            root?.setBackgroundColor(Color.parseColor("#00ff00"))
+            //root?.setBackgroundColor(Color.parseColor("#00ff00"))
 
         }
         nextButton.setOnClickListener {
@@ -43,11 +48,16 @@ class FeedbackFragment : Fragment() {
 
     companion object{
         private val Result:String = "result"
+        private val SetValues:String = "set"
 
-        fun newInstance(result:String): FeedbackFragment{
+        fun newInstance(result:String, set:MutableList<Int>): FeedbackFragment{
             val fragment = FeedbackFragment()
             val args = Bundle()
+            val test = ArrayList(set)
+
+
             args.putString(Result,result)
+            args.putIntegerArrayList(SetValues,test)
             fragment.arguments = args
 
             return fragment

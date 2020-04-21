@@ -59,8 +59,8 @@ class QuestionFragment : Fragment() {
 
         var yes: Boolean
         d("Elliott","$yeet")
-
-        var matchingType = generateQuestion(yeet.toString())
+        var set = generateSet()
+        var matchingType = generateQuestion(yeet.toString(),set)
 
         questionText.text = questionText.text as String + yeet
 
@@ -77,15 +77,15 @@ class QuestionFragment : Fragment() {
 
             count++
             result = checkAnswer(matchingType,yes)
-            val feedback = FeedbackFragment.newInstance(result)
+            val feedback = FeedbackFragment.newInstance(result,set)
             if (count < 10){
                 childFragmentManager.beginTransaction().replace(R.id.feedbackFrame,feedback).commit()
                 //val feedbackFragment = FeedbackFragment.newInstance(result)
                 //replaceFragment(feedbackFragment)
 
 
-
-                matchingType = generateQuestion(yeet.toString())
+                set = generateSet()
+                matchingType = generateQuestion(yeet.toString(),set)
 
 
             }else{
@@ -108,7 +108,9 @@ class QuestionFragment : Fragment() {
 
             if (count < 10){
 
-                matchingType = generateQuestion(yeet.toString())
+
+                set = generateSet()
+                matchingType = generateQuestion(yeet.toString(),set)
 
 
 
@@ -141,10 +143,15 @@ class QuestionFragment : Fragment() {
 
     }
 
-    fun generateQuestion(type:String): Boolean{
+    fun generateSet(): MutableList<Int>{
+        var set = Set_Relation_Generation.setGenerator()
+        return set
+    }
+
+    fun generateQuestion(type:String, set:MutableList<Int>): Boolean{
         val style: Int
         var typeOrNot : Int
-        var set = Set_Relation_Generation.setGenerator()
+        //var set = generateSet()
         var matchingType = true
         var relation: MutableList<Int>
 
