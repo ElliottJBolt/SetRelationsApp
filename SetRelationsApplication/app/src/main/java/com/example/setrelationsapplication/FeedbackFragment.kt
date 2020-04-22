@@ -38,27 +38,35 @@ class FeedbackFragment : Fragment() {
         val answer = arguments?.getBoolean(Answer)
 
         resultText.text = result
-        textView2.setText(set.toString())
+        //textView2.setText(set.toString())
 
         Log.d("SetTest", "$set")
         var i = 0
+        Log.d("textTest", "$relation")
+        Log.d("textTest", "$answer")
+        Log.d("textTest", "$result")
 
-        /**if (result == "Incorrect"){
+        if (result == "Incorrect" && answer == false && relation == "reflexive"){
+            Log.d("textTest", "YYYY")
 
-            if (answer == false && relation == "Reflexive")
-            textView2.setText("This was a " + relation + "relation because")
+            textView2.setText("This was a " + relation + "relation")
+            textView3.text = "There exists the pairs "
             if (set != null) {
-                do {
-                    textView2.text = textView2.text as String + set.elementAt(i)
 
-                } while (i<= set.size)
+                do {
+
+
+                    textView3.text = textView3.text as String +"("  + set.elementAt(i) + "," +set.elementAt(i)+ ")"
+                    i++
+
+                } while (i< set.size)
+                textView3.text = textView3.text as String
             }
 
 
+        }else if (result == "Incorrect "){
+            
         }
-        nextButton.setOnClickListener {
-            fragmentManager?.popBackStackImmediate()
-        }**/
 
 
     }

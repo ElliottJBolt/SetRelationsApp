@@ -130,7 +130,7 @@ class QuestionFragment : Fragment() {
         closeFeedback.setOnClickListener {
             closeFeedback.isVisible = false
             feedbackFrame.removeAllViews()
-            
+
 
 
         }
