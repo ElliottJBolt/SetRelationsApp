@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isGone
 import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.fragment_question.*
@@ -44,25 +45,20 @@ class QuestionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val user = (activity as ApplicationActivity).getUser()
+        closeFeedback.isVisible = false
 
-        val yeet = arguments?.getString(Choice)
+        val choice = arguments?.getString(Choice)
         var numAttempts = arguments?.getInt(Attempts)
 
         val dataBase = FirebaseFirestore.getInstance()
 
 
-
-
-
-
-
-
         var yes: Boolean
-        d("Elliott","$yeet")
+        d("Elliott","$choice")
         var set = generateSet()
-        var matchingType = generateQuestion(yeet.toString(),set)
+        var matchingType = generateQuestion(choice.toString(),set)
 
-        questionText.text = questionText.text as String + yeet
+        questionText.text = questionText.text as String + choice
 
         var count = 0
         val userToString = user.toString()
@@ -77,15 +73,17 @@ class QuestionFragment : Fragment() {
 
             count++
             result = checkAnswer(matchingType,yes)
-            val feedback = FeedbackFragment.newInstance(result,set)
+
+            var feedback = FeedbackFragment.newInstance(result,set, choice.toString(),yes)
+
             if (count < 10){
-                childFragmentManager.beginTransaction().replace(R.id.feedbackFrame,feedback).commit()
-                //val feedbackFragment = FeedbackFragment.newInstance(result)
-                //replaceFragment(feedbackFragment)
+                //showFeedback(result,set, choice.toString(),yes)
+                childFragmentManager.beginTransaction().replace(R.id.feedbackFrame,feedback,"feedback").disallowAddToBackStack().commit()
+                closeFeedback.isVisible = true
 
 
                 set = generateSet()
-                matchingType = generateQuestion(yeet.toString(),set)
+                matchingType = generateQuestion(choice.toString(),set)
 
 
             }else{
@@ -93,25 +91,30 @@ class QuestionFragment : Fragment() {
                     "score " + numAttempts  to numCorrectAnswers
                 )
                 d("Elliott","$user")
-                dataBase.collection("users").document(userToString).collection("questions").document(yeet.toString()).update(score)
+                dataBase.collection("users").document(userToString).collection("questions").document(choice.toString()).update(score)
                 fragmentManager?.popBackStackImmediate()
 
             }
 
         }
-        noButton.setOnClickListener {
-            count++
-            yes = false
-            checkAnswer(matchingType,yes)
-            numCorrectAnswersToString = numCorrectAnswers.toString()
 
+        noButton.setOnClickListener {
+            yes = false
+            count++
+
+            result = checkAnswer(matchingType,yes)
+
+            var feedback = FeedbackFragment.newInstance(result,set, choice.toString(),yes)
 
             if (count < 10){
+                //showFeedback(result,set, choice.toString(),yes)
+                childFragmentManager.beginTransaction().addToBackStack(null)
+                childFragmentManager.beginTransaction().replace(R.id.feedbackFrame,feedback).commit()
+                closeFeedback.isVisible = true
 
 
                 set = generateSet()
-                matchingType = generateQuestion(yeet.toString(),set)
-
+                matchingType = generateQuestion(choice.toString(),set)
 
 
             }else{
@@ -119,13 +122,25 @@ class QuestionFragment : Fragment() {
                     "score " + numAttempts  to numCorrectAnswers
                 )
                 d("Elliott","$user")
-                dataBase.collection("users").document(userToString).collection("questions").document(yeet.toString()).update(score)
-                numAttempts = numAttempts?.plus(1)
+                dataBase.collection("users").document(userToString).collection("questions").document(choice.toString()).update(score)
                 fragmentManager?.popBackStackImmediate()
-
             }
+        }
+
+        closeFeedback.setOnClickListener {
+            closeFeedback.isVisible = false
+            feedbackFrame.removeAllViews()
+            
+
+
         }
     }
+
+    /**fun showFeedback(result:String,set:MutableList<Int>,choice: String,yes: Boolean){
+        var feedback = FeedbackFragment.newInstance(result,set, choice,yes)
+        childFragmentManager.beginTransaction().replace(R.id.feedbackFrame,feedback).commit()
+
+    }**/
 
     companion object{
         private val Choice = "choice"
