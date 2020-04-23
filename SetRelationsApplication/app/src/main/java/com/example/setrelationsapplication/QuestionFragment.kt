@@ -166,14 +166,14 @@ class QuestionFragment : Fragment() {
     fun generateQuestion(type:String, set:MutableList<Int>): Boolean{
         val style: Int
         var typeOrNot : Int
-        //var set = generateSet()
+
         var matchingType = true
         var relation: MutableList<Int>
 
         formatSet(set) //formats the set text
 
         style = 1//Random.nextInt(1,1) //Needs to be changed to until 2 when other question type are implemented
-
+        relation = Set_Relation_Generation.relationGenerator(set)
         if(style == 1){
             if (type == "transitive"){
                     relation = Set_Relation_Generation.relationGenerator(set)
@@ -192,10 +192,10 @@ class QuestionFragment : Fragment() {
 
             }else if (type == "reflexive"){
                 typeOrNot = Random.nextInt(1,3)
-                d("Elliott","$typeOrNot")
+
 
                 if(typeOrNot==1){
-                    relation = Set_Relation_Generation.reflexive(set)
+                    relation = Set_Relation_Generation.reflexive(set,relation)
                     formatRelation(relation)
                     matchingType = true
 
@@ -208,9 +208,9 @@ class QuestionFragment : Fragment() {
 
             }else if (type == "symmetric"){
                 typeOrNot = Random.nextInt(0,2)
-                d("Elliott","$typeOrNot")
+
                 if (typeOrNot==1){
-                    relation = Set_Relation_Generation.symmetric(set)
+                    relation = Set_Relation_Generation.symmetric(set,relation)
                     formatRelation(relation)
                     matchingType = true
 
@@ -238,8 +238,6 @@ class QuestionFragment : Fragment() {
     fun checkAnswer(matchingType:Boolean,choice:Boolean):String{
         var result: String
 
-        d("answer","$matchingType")
-        d("answer","$choice")
         if (matchingType == choice){
             result = "Correct"
             textView.text = result

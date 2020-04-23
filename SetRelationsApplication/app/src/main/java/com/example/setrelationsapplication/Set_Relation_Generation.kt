@@ -42,7 +42,7 @@ object Set_Relation_Generation {
     fun relationGenerator(values: MutableList<Int>): MutableList<Int> {
         var lengthOfSet = values.size
         var createdRelation: MutableList<Int> = mutableListOf<Int>()
-        var noOfRelationPairs = Random.nextInt(3, 7)
+        var noOfRelationPairs = Random.nextInt(3, 5)
         var y = 0
 
         do {
@@ -56,38 +56,40 @@ object Set_Relation_Generation {
         return createdRelation
     }
 
-    fun reflexive(values: MutableList<Int>): MutableList<Int> {
+    fun reflexive(values: MutableList<Int>,allReflexiveNum:MutableList<Int>): MutableList<Int> {
         var lengthOfSet = values.size
         var reflexiveRelation: MutableList<Int> = mutableListOf<Int>()
 
-        var noOfRelationPairs = Random.nextInt(lengthOfSet, 8)
+        var noOfRelationPairs = allReflexiveNum.size /2
 
         var x = 0
         var y = 0
         var number: Int
         var actualValue: Int
 
-        var allReflexiveNum: MutableList<Int> = mutableListOf<Int>()
+
+        //old code before takinga  relation as an input
+       /** var allReflexiveNum: MutableList<Int> = mutableListOf<Int>()
 
         do {
             allReflexiveNum.add(values.elementAt(x))
             x++
-        } while (x < values.size)
+        } while (x < values.size)**/
 
         var allReflexNumLength = allReflexiveNum.size
 
-        allReflexiveNum.shuffle()
+        //allReflexiveNum.shuffle()
 
         val randomNum = Random.nextInt(1, 2)
 
-        if (randomNum.rem(2) == 1) {
+       /** if (randomNum.rem(2) == 1) {
             number = Random.nextInt(0, lengthOfSet)
             actualValue = values.elementAt(number)
             reflexiveRelation.add(actualValue)
             number = Random.nextInt(0, lengthOfSet)
             actualValue = values.elementAt(number)
             reflexiveRelation.add(actualValue)
-        }
+        }**/
 
         do {
             var reflexiveNumber = allReflexiveNum.first()
@@ -119,18 +121,18 @@ object Set_Relation_Generation {
 
     }
 
-    fun symmetric(values: MutableList<Int>): MutableList<Int> {
+    fun symmetric(values: MutableList<Int>,symmetricRelation:MutableList<Int>): MutableList<Int> {
         var lengthOfSet = values.size
-        var symmetricRelation: MutableList<Int> = mutableListOf<Int>()
+        //var symmetricRelation: MutableList<Int> = mutableListOf<Int>()
 
-        var noOfRelationPairs = Random.nextInt(3, 7)
-        var amountOfNumbers = noOfRelationPairs * 2
-        var number = Random.nextInt(0, 9)
+        //var noOfRelationPairs = Random.nextInt(3, 7)
+        var amountOfNumbers = symmetricRelation.size + 1 //Might need to remove + 1 
+        //var number = Random.nextInt(0, 9)
 
-        do {
+        /**do {
             symmetricRelation.add(number)
             number = Random.nextInt(0, 9)
-        } while (symmetricRelation.size < amountOfNumbers)
+        } while (symmetricRelation.size < amountOfNumbers)**/
 
 
         var selectNumber = Random.nextInt(0, lengthOfSet)
