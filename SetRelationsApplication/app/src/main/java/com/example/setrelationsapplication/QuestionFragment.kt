@@ -191,26 +191,33 @@ class QuestionFragment : Fragment() {
                     }
 
             }else if (type == "reflexive"){
-                typeOrNot = Random.nextInt(1,2)
+                typeOrNot = Random.nextInt(1,3)
+                d("Elliott","$typeOrNot")
+
                 if(typeOrNot==1){
                     relation = Set_Relation_Generation.reflexive(set)
                     formatRelation(relation)
+                    matchingType = true
 
                 }else{
                     relation = Set_Relation_Generation.relationGenerator(set)
                     formatRelation(relation)
+                    matchingType = false
 
                 }
 
             }else if (type == "symmetric"){
-                typeOrNot = Random.nextInt(1,2)
+                typeOrNot = Random.nextInt(0,2)
+                d("Elliott","$typeOrNot")
                 if (typeOrNot==1){
                     relation = Set_Relation_Generation.symmetric(set)
                     formatRelation(relation)
+                    matchingType = true
 
                 }else{
                     relation = Set_Relation_Generation.relationGenerator(set)
                     formatRelation(relation)
+                    matchingType = false
 
                 }
 
@@ -231,6 +238,8 @@ class QuestionFragment : Fragment() {
     fun checkAnswer(matchingType:Boolean,choice:Boolean):String{
         var result: String
 
+        d("answer","$matchingType")
+        d("answer","$choice")
         if (matchingType == choice){
             result = "Correct"
             textView.text = result

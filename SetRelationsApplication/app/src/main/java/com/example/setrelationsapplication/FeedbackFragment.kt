@@ -95,7 +95,7 @@ class FeedbackFragment : Fragment() {
 
         }
 
-        
+
     }
 
     private fun formatFeedback( set:ArrayList<Int>){
