@@ -172,11 +172,11 @@ class QuestionFragment : Fragment() {
 
         formatSet(set) //formats the set text
 
-        style = 1//Random.nextInt(1,1) //Needs to be changed to until 2 when other question type are implemented
+        style = Random.nextInt(1,2)//Random.nextInt(1,1) //Needs to be changed to until 2 when other question type are implemented
         relation = Set_Relation_Generation.relationGenerator(set)
         if(style == 1){
             if (type == "transitive"){
-                    relation = Set_Relation_Generation.relationGenerator(set)
+                    //relation = Set_Relation_Generation.relationGenerator(set)
                     formatRelation(relation)
                     var trans = Set_Relation_Generation.transitive(relation)
 
@@ -225,6 +225,23 @@ class QuestionFragment : Fragment() {
             }else{
                 //for mixed questions
                 typeOrNot = Random.nextInt(1,2)
+
+            }
+
+        }else if(style == 2){
+            if (type == "transitive"){
+                relation = Set_Relation_Generation.relationGenerator(set)
+                var toTrans:Boolean
+                do {
+                    toTrans = Set_Relation_Generation.transitive(relation)
+                }while(toTrans == false)
+
+
+            }else if (type == "reflexive"){
+                relation = Set_Relation_Generation.reflexive(set,relation)
+
+            }else if (type == "symmetric"){
+                relation = Set_Relation_Generation.symmetric(set,relation)
 
             }
 

@@ -88,7 +88,7 @@ class FeedbackFragment : Fragment() {
 
         }else if (result == "Incorrect" && answer == true && relation == "transitive"){
             if (set != null) {
-                textView2.setText("This was a " + relation + "relation")
+                textView2.setText("This was not a " + relation + "relation")
                 textView3.text = "If (a,b) and (b,c) exist then so must (a,c) to be transitive "
                 //formatFeedback(set)
             }
