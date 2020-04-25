@@ -47,31 +47,41 @@ object InputQuestion {
         var sizeOfSet = relation.size
         var i = 0
         var j:Int
-        var firstNum:Int
-        var secondNum:Int
+        var firstNumFirstPair:Int
+        var secondNumFirstPair:Int
+        var firstNumSecPair:Int
+        var secondNumSecPair:Int
         var listOfValuesAndPos = mutableListOf<Int>()
+        
         do {
             j = i +3
-            firstNum = relation.elementAt(i)
+            firstNumFirstPair = relation.elementAt(i)
+            secondNumFirstPair = relation.elementAt(i+1)
 
-            secondNum = relation.elementAt(j)
-
-            if (firstNum == secondNum){
-                listOfValuesAndPos.add(firstNum)
-                listOfValuesAndPos.add(secondNum)
-                listOfValuesAndPos.add(i)
-                listOfValuesAndPos.add(j)
-
-            }
+            do{
+                firstNumSecPair = relation.elementAt(j-1)
+                secondNumSecPair = relation.elementAt(j)
 
 
-            i++
+
+                if (firstNumFirstPair == secondNumSecPair && secondNumFirstPair == firstNumSecPair){
+
+                    listOfValuesAndPos.add(firstNumFirstPair)
+                    listOfValuesAndPos.add(secondNumFirstPair)
+                    listOfValuesAndPos.add(firstNumSecPair)
+                    listOfValuesAndPos.add(secondNumSecPair)
+                    listOfValuesAndPos.add(i)
+                    listOfValuesAndPos.add(j)
+                }
+                j = j + 2
+
+            }while (j < sizeOfSet)
+
+            i = i + 2
         }while (i<sizeOfSet)
 
         return listOfValuesAndPos
     }
-
-
 
 
 
