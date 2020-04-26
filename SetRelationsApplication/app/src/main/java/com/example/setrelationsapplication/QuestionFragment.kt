@@ -1,21 +1,16 @@
 package com.example.setrelationsapplication
 
 
-import android.content.ContentValues
-import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.util.Log.d
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isGone
-import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.fragment_question.*
-import kotlinx.android.synthetic.main.fragment_question.view.*
 import kotlin.random.Random
 
 
@@ -27,6 +22,7 @@ class QuestionFragment : Fragment() {
     private var numCorrectAnswers = 0
     private var hiddenNums:MutableList<Int> = mutableListOf()
     private var positionOfNum:Int = 0
+    private var relationVals:MutableList<Int> = mutableListOf()
 
 
 
@@ -38,8 +34,6 @@ class QuestionFragment : Fragment() {
         // Inflate the layout for this fragment
         root =  inflater.inflate(R.layout.fragment_question, container, false)
         numCorrectAnswers = 0
-
-
 
 
         return root
@@ -65,7 +59,6 @@ class QuestionFragment : Fragment() {
         var count = 0
         val userToString = user.toString()
 
-        var numCorrectAnswersToString: String
 
         var result:String
 
@@ -79,7 +72,7 @@ class QuestionFragment : Fragment() {
 
             if (count < 10){
 
-                childFragmentManager.beginTransaction().replace(R.id.feedbackFrame,FeedbackFragment.newInstance(result,set, choice.toString(),yes),"feedback").disallowAddToBackStack().commit()
+                childFragmentManager.beginTransaction().replace(R.id.feedbackFrame,FeedbackFragment.newInstance(result,set, choice.toString(),yes)).disallowAddToBackStack().commit()
                 closeFeedback.isVisible = true
 
 
@@ -107,9 +100,9 @@ class QuestionFragment : Fragment() {
 
 
             if (count < 10){
-                //showFeedback(result,set, choice.toString(),yes)
-                childFragmentManager.beginTransaction().addToBackStack(null)
-                childFragmentManager.beginTransaction().replace(R.id.feedbackFrame,FeedbackFragment.newInstance(result,set, choice.toString(),yes),"feedback").commit()
+
+
+                childFragmentManager.beginTransaction().replace(R.id.feedbackFrame,FeedbackFragment.newInstance(result,set, choice.toString(),yes)).disallowAddToBackStack().commit()
                 closeFeedback.isVisible = true
 
 
@@ -128,26 +121,45 @@ class QuestionFragment : Fragment() {
         }
 
         submitButton.setOnClickListener {
+            var userAnswer = answerInput.getText().toString().toInt()
+
+            Log.d("Answer", "$userAnswer")
+
+            count++
+            if (count < 10){
 
 
+                childFragmentManager.beginTransaction().replace(R.id.testName,SecondStyleFeedback.newInstance(hiddenNums,positionOfNum,userAnswer,relationVals)).disallowAddToBackStack().commit()
+                closeFeedback.isVisible = true
+
+                set = generateSet()
+                matchingType = generateQuestion(choice.toString(),set)
+                //answerInput.text.clear()
+
+            }else   {
+                val score = mapOf(
+                        "score" + numAttempts to numCorrectAnswers
+                        )
+                dataBase.collection("users").document(userToString).collection("questions").document(choice.toString()).update(score)
+                fragmentManager?.popBackStackImmediate()
+
+            }
 
 
         }
 
         closeFeedback.setOnClickListener {
             closeFeedback.isVisible = false
+            answerInput.setText("")
             feedbackFrame.removeAllViews()
+            testName.removeAllViews()
 
 
 
         }
     }
 
-    /**fun showFeedback(result:String,set:MutableList<Int>,choice: String,yes: Boolean){
-        var feedback = FeedbackFragment.newInstance(result,set, choice,yes)
-        childFragmentManager.beginTransaction().replace(R.id.feedbackFrame,feedback).commit()
 
-    }**/
 
     companion object{
         private val Choice = "choice"
@@ -181,7 +193,7 @@ class QuestionFragment : Fragment() {
 
         formatSet(set) //formats the set text
 
-        style = Random.nextInt(1,3)//Random.nextInt(1,1) //Needs to be changed to until 2 when other question type are implemented
+        style = Random.nextInt(1,3)
         d("Style","$style")
         relation = Set_Relation_Generation.relationGenerator(set)
         if(style == 1){
@@ -266,6 +278,7 @@ class QuestionFragment : Fragment() {
 
             }else if (type == "symmetric"){
                 relation = Set_Relation_Generation.symmetric(set,relation)
+                relationVals = relation
                 hiddenValues = InputQuestion.symmetric(relation)
                 hiddenNums = hiddenValues
                 formatRelationSecondQuestion(relation,hiddenValues)
@@ -281,12 +294,11 @@ class QuestionFragment : Fragment() {
 
         if (matchingType == choice){
             result = "Correct"
-            textView.text = result
+
             numCorrectAnswers ++
 
         }else{
             result = "Incorrect"
-            textView.text = result
 
         }
         return result
