@@ -20,11 +20,9 @@ import kotlin.random.Random
 class QuestionFragment : Fragment() {
     private var root: View? = null
     private var numCorrectAnswers = 0
-    private var hiddenNums:MutableList<Int> = mutableListOf()
-    private var positionOfNum:Int = 0
-    private var relationVals:MutableList<Int> = mutableListOf()
-
-
+    private var hiddenNums: MutableList<Int> = mutableListOf()
+    private var positionOfNum: Int = 0
+    private var relationVals: MutableList<Int> = mutableListOf()
 
 
     override fun onCreateView(
@@ -32,7 +30,7 @@ class QuestionFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        root =  inflater.inflate(R.layout.fragment_question, container, false)
+        root = inflater.inflate(R.layout.fragment_question, container, false)
         numCorrectAnswers = 0
 
 
@@ -51,41 +49,45 @@ class QuestionFragment : Fragment() {
 
 
         var yes: Boolean
-        d("Elliott","$choice")
+        d("Elliott", "$choice")
         var set = generateSet()
-        var matchingType = generateQuestion(choice.toString(),set)
+        var matchingType = generateQuestion(choice.toString(), set)
 
 
         var count = 0
         val userToString = user.toString()
 
 
-        var result:String
+        var result: String
 
 
         yesButton.setOnClickListener {
             yes = true
 
             count++
-            result = checkAnswer(matchingType,yes)
+            result = checkAnswer(matchingType, yes)
 
 
-            if (count < 10){
+            if (count < 10) {
 
-                childFragmentManager.beginTransaction().replace(R.id.feedbackFrame,FeedbackFragment.newInstance(result,set, choice.toString(),yes)).disallowAddToBackStack().commit()
+                childFragmentManager.beginTransaction().replace(
+                    R.id.feedbackFrame,
+                    FeedbackFragment.newInstance(result, set, choice.toString(), yes)
+                ).disallowAddToBackStack().commit()
                 closeFeedback.isVisible = true
 
 
                 set = generateSet()
-                matchingType = generateQuestion(choice.toString(),set)
+                matchingType = generateQuestion(choice.toString(), set)
 
 
-            }else{
+            } else {
                 val score = mapOf(
-                    "score " + numAttempts  to numCorrectAnswers
+                    "score " + numAttempts to numCorrectAnswers
                 )
-                d("Elliott","$user")
-                dataBase.collection("users").document(userToString).collection("questions").document(choice.toString()).update(score)
+                d("Elliott", "$user")
+                dataBase.collection("users").document(userToString).collection("questions")
+                    .document(choice.toString()).update(score)
                 fragmentManager?.popBackStackImmediate()
 
             }
@@ -96,26 +98,30 @@ class QuestionFragment : Fragment() {
             yes = false
             count++
 
-            result = checkAnswer(matchingType,yes)
+            result = checkAnswer(matchingType, yes)
 
 
-            if (count < 10){
+            if (count < 10) {
 
 
-                childFragmentManager.beginTransaction().replace(R.id.feedbackFrame,FeedbackFragment.newInstance(result,set, choice.toString(),yes)).disallowAddToBackStack().commit()
+                childFragmentManager.beginTransaction().replace(
+                    R.id.feedbackFrame,
+                    FeedbackFragment.newInstance(result, set, choice.toString(), yes)
+                ).disallowAddToBackStack().commit()
                 closeFeedback.isVisible = true
 
 
                 set = generateSet()
-                matchingType = generateQuestion(choice.toString(),set)
+                matchingType = generateQuestion(choice.toString(), set)
 
 
-            }else{
+            } else {
                 val score = mapOf(
-                    "score " + numAttempts  to numCorrectAnswers
+                    "score " + numAttempts to numCorrectAnswers
                 )
-                d("Elliott","$user")
-                dataBase.collection("users").document(userToString).collection("questions").document(choice.toString()).update(score)
+                d("Elliott", "$user")
+                dataBase.collection("users").document(userToString).collection("questions")
+                    .document(choice.toString()).update(score)
                 fragmentManager?.popBackStackImmediate()
             }
         }
@@ -126,21 +132,30 @@ class QuestionFragment : Fragment() {
             Log.d("Answer", "$userAnswer")
 
             count++
-            if (count < 10){
+            if (count < 10) {
 
 
-                childFragmentManager.beginTransaction().replace(R.id.testName,SecondStyleFeedback.newInstance(hiddenNums,positionOfNum,userAnswer,relationVals)).disallowAddToBackStack().commit()
+                childFragmentManager.beginTransaction().replace(
+                    R.id.testName,
+                    SecondStyleFeedback.newInstance(
+                        hiddenNums,
+                        positionOfNum,
+                        userAnswer,
+                        relationVals
+                    )
+                ).disallowAddToBackStack().commit()
                 closeFeedback.isVisible = true
 
                 set = generateSet()
-                matchingType = generateQuestion(choice.toString(),set)
+                matchingType = generateQuestion(choice.toString(), set)
                 //answerInput.text.clear()
 
-            }else   {
+            } else {
                 val score = mapOf(
-                        "score" + numAttempts to numCorrectAnswers
-                        )
-                dataBase.collection("users").document(userToString).collection("questions").document(choice.toString()).update(score)
+                    "score" + numAttempts to numCorrectAnswers
+                )
+                dataBase.collection("users").document(userToString).collection("questions")
+                    .document(choice.toString()).update(score)
                 fragmentManager?.popBackStackImmediate()
 
             }
@@ -155,20 +170,18 @@ class QuestionFragment : Fragment() {
             testName.removeAllViews()
 
 
-
         }
     }
 
 
-
-    companion object{
+    companion object {
         private val Choice = "choice"
         private val Attempts = "attempts"
 
-        fun newInstance(choice: String,attempts: Int?): QuestionFragment{
+        fun newInstance(choice: String, attempts: Int?): QuestionFragment {
             val fragment = QuestionFragment()
             val args = Bundle()
-            args.putString(Choice,choice)
+            args.putString(Choice, choice)
             attempts?.let { args.putInt(Attempts, it) }
             fragment.arguments = args
             return fragment
@@ -177,26 +190,28 @@ class QuestionFragment : Fragment() {
 
     }
 
-    fun generateSet(): MutableList<Int>{
+    fun generateSet(): MutableList<Int> {
         var set = Set_Relation_Generation.setGenerator()
         return set
     }
 
-    fun generateQuestion(type:String, set:MutableList<Int>): Boolean{
+    fun generateQuestion(type: String, set: MutableList<Int>): Boolean {
+
         val style: Int
-        var typeOrNot : Int
-        var choice  = arguments?.getString(Choice)
+        var typeOrNot: Int
+        var choice = arguments?.getString(Choice)
 
         var matchingType = true
+        var transReturn: MutableList<Any>
         var relation: MutableList<Int>
         var hiddenValues: MutableList<Int>
 
         formatSet(set) //formats the set text
 
-        style = Random.nextInt(1,3)
-        d("Style","$style")
+        style = 1//Random.nextInt(1, 3)
+        d("Style", "$style")
         relation = Set_Relation_Generation.relationGenerator(set)
-        if(style == 1){
+        if (style == 1) {
             hiddenValues = mutableListOf()
             submitButton.isVisible = false
             answerInput.isVisible = false
@@ -204,46 +219,47 @@ class QuestionFragment : Fragment() {
             yesButton.isVisible = true
 
             questionText.text = "Is the following Relation (R) on Set (A) " + choice
-            if (type == "transitive"){
-                    //relation = Set_Relation_Generation.relationGenerator(set)
-                    formatRelation(relation)
-                    var trans = Set_Relation_Generation.transitive(relation)
+            if (type == "transitive") {
+                //relation = Set_Relation_Generation.relationGenerator(set)
+                formatRelation(relation)
+                transReturn = Set_Relation_Generation.transitive(relation)
+                var trans = transReturn.elementAt(0).toString().toBoolean()
 
-                    if (trans == true){
-                        matchingType = true
-                        return matchingType
+                if (trans == true) {
+                    matchingType = true
+                    return matchingType
 
-                    }else{
-                        matchingType = false
-                        return matchingType
+                } else {
+                    matchingType = false
+                    return matchingType
 
-                    }
+                }
 
-            }else if (type == "reflexive"){
-                typeOrNot = Random.nextInt(1,3)
+            } else if (type == "reflexive") {
+                typeOrNot = Random.nextInt(1, 3)
 
 
-                if(typeOrNot==1){
-                    relation = Set_Relation_Generation.reflexive(set,relation)
+                if (typeOrNot == 1) {
+                    relation = Set_Relation_Generation.reflexive(set, relation)
                     formatRelation(relation)
                     matchingType = true
 
-                }else{
+                } else {
                     relation = Set_Relation_Generation.relationGenerator(set)
                     formatRelation(relation)
                     matchingType = false
 
                 }
 
-            }else if (type == "symmetric"){
-                typeOrNot = Random.nextInt(0,2)
+            } else if (type == "symmetric") {
+                typeOrNot = Random.nextInt(0, 2)
 
-                if (typeOrNot==1){
-                    relation = Set_Relation_Generation.symmetric(set,relation)
+                if (typeOrNot == 1) {
+                    relation = Set_Relation_Generation.symmetric(set, relation)
                     formatRelation(relation)
                     matchingType = true
 
-                }else{
+                } else {
                     relation = Set_Relation_Generation.relationGenerator(set)
                     formatRelation(relation)
                     matchingType = false
@@ -251,13 +267,13 @@ class QuestionFragment : Fragment() {
                 }
 
 
-            }else{
+            } else {
                 //for mixed questions
-                typeOrNot = Random.nextInt(1,2)
+                typeOrNot = Random.nextInt(1, 2)
 
             }
 
-        }else /**if(style == 2)**/{
+        } else {
             submitButton.isVisible = true
             answerInput.isVisible = true
             yesButton.isVisible = false
@@ -265,23 +281,34 @@ class QuestionFragment : Fragment() {
 
             questionText.text = "Fill in the missing to make the relation " + choice
 
-            if (type == "transitive"){
-                relation = Set_Relation_Generation.relationGenerator(set)
-                var toTrans:Boolean
+            if (type == "transitive") {
+
+                var toTrans = false
+
                 do {
-                    toTrans = Set_Relation_Generation.transitive(relation)
-                }while(toTrans == false)
+                    relation = Set_Relation_Generation.relationGenerator(set)
+                    transReturn = Set_Relation_Generation.transitive(relation)
+                    toTrans = transReturn.elementAt(0).toString().toBoolean()
+                    relationVals = relation
+                } while (toTrans == false)
+
+                var a = transReturn.elementAt(1).toString().toInt()
+                var b = transReturn.elementAt(2).toString().toInt()
+                var c = transReturn.elementAt(3).toString().toInt()
+                hiddenValues = InputQuestion.transitive(relation, a, b, c)
+                hiddenNums = hiddenValues
+                formatRelationSecondQuestion(relation, hiddenValues)
 
 
-            }else if (type == "reflexive"){
-                relation = Set_Relation_Generation.reflexive(set,relation)
+            } else if (type == "reflexive") {
+                relation = Set_Relation_Generation.reflexive(set, relation)
 
-            }else if (type == "symmetric"){
-                relation = Set_Relation_Generation.symmetric(set,relation)
+            } else if (type == "symmetric") {
+                relation = Set_Relation_Generation.symmetric(set, relation)
                 relationVals = relation
                 hiddenValues = InputQuestion.symmetric(relation)
                 hiddenNums = hiddenValues
-                formatRelationSecondQuestion(relation,hiddenValues)
+                formatRelationSecondQuestion(relation, hiddenValues)
 
 
             }
@@ -289,29 +316,29 @@ class QuestionFragment : Fragment() {
         return matchingType
     }
 
-    fun checkAnswer(matchingType:Boolean,choice:Boolean):String{
+    fun checkAnswer(matchingType: Boolean, choice: Boolean): String {
         var result: String
 
-        if (matchingType == choice){
+        if (matchingType == choice) {
             result = "Correct"
 
-            numCorrectAnswers ++
+            numCorrectAnswers++
 
-        }else{
+        } else {
             result = "Incorrect"
 
         }
         return result
     }
 
-    fun formatSet(set:MutableList<Int>){
+    fun formatSet(set: MutableList<Int>) {
         val set = set
         var j = 0
         setText.text = "A = {"
-        for (x in set){
-            if (j == set.size - 1){
+        for (x in set) {
+            if (j == set.size - 1) {
                 setText.text = setText.text as String + "${set.elementAt(j)}"
-            }else {
+            } else {
                 setText.text = setText.text as String + "${set.elementAt(j)},"
                 j++
             }
@@ -320,19 +347,17 @@ class QuestionFragment : Fragment() {
 
     }
 
-    fun formatRelation(relation:MutableList<Int>){
+    fun formatRelation(relation: MutableList<Int>) {
         val relation = relation
         var i = 0
         relationText.text = "R = {"
 
-        for(x in relation){
-            if(i == 0){
+        for (x in relation) {
+            if (i == 0) {
                 relationText.text = relationText.text as String + "(${relation.elementAt(i)},"
-            }
-            else if ( i.rem(2) == 1  ) {
+            } else if (i.rem(2) == 1) {
                 relationText.text = relationText.text as String + "${relation.elementAt(i)})"
-            }
-            else{
+            } else {
 
                 relationText.text = relationText.text as String + ",(${relation.elementAt(i)},"
             }
@@ -342,33 +367,31 @@ class QuestionFragment : Fragment() {
 
     }
 
-    fun formatRelationSecondQuestion(relation: MutableList<Int>, hiddenValues: MutableList<Int>){
+    fun formatRelationSecondQuestion(relation: MutableList<Int>, hiddenValues: MutableList<Int>) {
         var valueOne: Int
-        var position = Random.nextInt(3,4)
+        var position = Random.nextInt(3, 4)
         positionOfNum = position
 
         valueOne = hiddenValues.elementAt(position)
         var i = 0
         relationText.text = "R = {"
 
-        for(x in relation){
-            if(i == 0){
+        for (x in relation) {
+            if (i == 0) {
                 relationText.text = relationText.text as String + "(${relation.elementAt(i)},"
-            }else if (i == valueOne){
+            } else if (i == valueOne) {
 
-                if (valueOne.rem(2) == 0){
+                if (valueOne.rem(2) == 0) {
                     relationText.text = relationText.text as String + "(X,"
 
-                }else   {
+                } else {
                     relationText.text = relationText.text as String + "X"
                 }
 
 
-            }
-            else if ( i.rem(2) == 1  ) {
+            } else if (i.rem(2) == 1) {
                 relationText.text = relationText.text as String + "${relation.elementAt(i)})"
-            }
-            else{
+            } else {
 
                 relationText.text = relationText.text as String + ",(${relation.elementAt(i)},"
             }
@@ -376,14 +399,6 @@ class QuestionFragment : Fragment() {
         }
         relationText.text = relationText.text as String + "}"
 
-
-
-    }
-
-    private fun replaceFragment(fragment: Fragment){
-        fragmentManager?.beginTransaction()?.replace(R.id.frameLayout, fragment)
-            ?.addToBackStack(null)
-            ?.commit()
 
     }
 

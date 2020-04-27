@@ -45,7 +45,7 @@ object InputQuestion {
     }
 
     fun symmetric(relation: MutableList<Int>):MutableList<Int>{
-        var sizeOfSet = relation.size
+        var sizeOfRelation = relation.size
         var i = 0
         var j = i + 3
         var firstNumFirstPair:Int
@@ -75,15 +75,118 @@ object InputQuestion {
                     listOfValuesAndPos.add(j - 1)
                     listOfValuesAndPos.add(secondNumFirstPair)
                     listOfValuesAndPos.add(firstNumSecPair)
+                    break
                 }
                 j = j + 2
 
-            }while (j < sizeOfSet )
+            }while (j < sizeOfRelation )
 
             i = i + 2
-        }while (i<sizeOfSet - 2)
+        }while (i<sizeOfRelation - 2)
 
         return listOfValuesAndPos
+    }
+
+    fun transitive(relation: MutableList<Int>,a:Int,b:Int,c:Int):MutableList<Int>{
+        var whichNum = Random.nextInt(1,4)
+        var listOfValuesAndPos = mutableListOf<Int>()
+        var i = 0
+        var num1:Int
+        var num2: Int
+        Log.d("Toot", "$whichNum")
+        Log.d("Toot", "$relation")
+
+
+        if (whichNum == 1){
+            whichNum = a
+            do {
+                num1 = relation.elementAt(i)
+
+                if (num1 == a && i.rem(2)==0){
+                    Log.d("Toot1", "$num1")
+                        num2 = relation.elementAt(i+1)
+                        if (num2 == b || num2 == c){
+                            Log.d("Toot1", "$num2")
+                            listOfValuesAndPos.add(num1)
+                            listOfValuesAndPos.add(num2)
+                            listOfValuesAndPos.add(i)
+                            listOfValuesAndPos.add(i+1)
+                            break
+
+                        }
+
+                }
+                i++
+
+            }while ( i < relation.size)
+
+        }else if(whichNum == 2){
+            whichNum = b
+            do {
+                num1 = relation.elementAt(i)
+                if (num1 == b&& i.rem(2)==0){
+                    Log.d("Toot2", "$num1")
+                    num2 = relation.elementAt(i+1)
+                    if (num2 == c){
+                        Log.d("Toot2", "$num2")
+                        listOfValuesAndPos.add(num1)
+                        listOfValuesAndPos.add(num2)
+                        listOfValuesAndPos.add(i)
+                        listOfValuesAndPos.add(i+1)
+                        break
+                    }
+
+                }else if (num1 == b && i.rem(2) ==1){
+                    Log.d("Toot3", "$num1")
+                    num2 = relation.elementAt(i-1)
+
+                    if (num2 == a){
+                        Log.d("Toot3", "$num2")
+                        listOfValuesAndPos.add(num1)
+                        listOfValuesAndPos.add(num2)
+                        listOfValuesAndPos.add(i)
+                        listOfValuesAndPos.add(i-1)
+                        break
+                    }
+                }
+                i++
+            }while (i < relation.size)
+
+        }else{
+            whichNum = c
+            do {
+                num1 = relation.elementAt(i)
+                if (num1 == c && i.rem(2)==1){
+                    Log.d("Toot4", "$num1")
+                    num2 = relation.elementAt(i-1)
+                    if (num2 == a){
+                        Log.d("Toot4", "$num2")
+                        listOfValuesAndPos.add(num1)
+                        listOfValuesAndPos.add(num2)
+                        listOfValuesAndPos.add(i)
+                        listOfValuesAndPos.add(i-1)
+                        break
+
+
+                    }else if(num2 == b){
+                        Log.d("Toot5", "$num2")
+                        listOfValuesAndPos.add(num1)
+                        listOfValuesAndPos.add(num2)
+                        listOfValuesAndPos.add(i)
+                        listOfValuesAndPos.add(i-1)
+                        break
+
+                    }
+                }
+                i++
+
+            }while (i<relation.size)
+
+        }
+        Log.d("Toot6", "$listOfValuesAndPos")
+
+        return listOfValuesAndPos
+
     }
 
 

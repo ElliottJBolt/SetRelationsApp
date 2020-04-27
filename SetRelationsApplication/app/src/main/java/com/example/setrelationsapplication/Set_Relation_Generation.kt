@@ -4,6 +4,10 @@ import android.util.Log.d
 import kotlin.random.Random
 
 object Set_Relation_Generation {
+    private var globalA: Int = 0
+    private var globalB: Int = 0
+    private var globalC: Int = 0
+
     /**
      * Creates a set to be used to form the relations
      * @return a list of numbers
@@ -44,23 +48,45 @@ object Set_Relation_Generation {
         var createdRelation: MutableList<Int> = mutableListOf<Int>()
         var noOfRelationPairs = Random.nextInt(3, 4)
         var y = 0
+        var i =0
+        var num1:Int
+        var num2:Int
+        var num3:Int
+        var num4:Int
 
         do {
             var number = Random.nextInt(0, lengthOfSet)
             var orderedPairValue = values.elementAt(number)
+
             createdRelation.add(orderedPairValue)
+
             y++
 
         } while (y < noOfRelationPairs * 2)
 
+        do {
+            num1 = createdRelation.elementAt(i)
+            num2 = createdRelation.elementAt(i+2)
+            if (num1 == num2){
+                num3 = createdRelation.elementAt(i+1)
+                num4 = createdRelation.elementAt(i+3)
+                if (num3 == num4){
+                    num1 = Random.nextInt(0,lengthOfSet)
+                    num1 = values.elementAt(num1)
+                    createdRelation.set(i,num1)
+                }
+            }
+            i++
+        }while (i < createdRelation.size - 3 )
+
         return createdRelation
     }
 
-    fun reflexive(values: MutableList<Int>,allReflexiveNum:MutableList<Int>): MutableList<Int> {
+    fun reflexive(values: MutableList<Int>, allReflexiveNum: MutableList<Int>): MutableList<Int> {
         var lengthOfSet = values.size
         var reflexiveRelation: MutableList<Int> = mutableListOf<Int>()
 
-        var noOfRelationPairs = allReflexiveNum.size /2
+        var noOfRelationPairs = allReflexiveNum.size / 2
 
         var x = 0
         var y = 0
@@ -69,11 +95,11 @@ object Set_Relation_Generation {
 
 
         //old code before takinga  relation as an input
-       /** var allReflexiveNum: MutableList<Int> = mutableListOf<Int>()
+        /** var allReflexiveNum: MutableList<Int> = mutableListOf<Int>()
 
         do {
-            allReflexiveNum.add(values.elementAt(x))
-            x++
+        allReflexiveNum.add(values.elementAt(x))
+        x++
         } while (x < values.size)**/
 
         var allReflexNumLength = allReflexiveNum.size
@@ -82,13 +108,13 @@ object Set_Relation_Generation {
 
         val randomNum = Random.nextInt(1, 2)
 
-       /** if (randomNum.rem(2) == 1) {
-            number = Random.nextInt(0, lengthOfSet)
-            actualValue = values.elementAt(number)
-            reflexiveRelation.add(actualValue)
-            number = Random.nextInt(0, lengthOfSet)
-            actualValue = values.elementAt(number)
-            reflexiveRelation.add(actualValue)
+        /** if (randomNum.rem(2) == 1) {
+        number = Random.nextInt(0, lengthOfSet)
+        actualValue = values.elementAt(number)
+        reflexiveRelation.add(actualValue)
+        number = Random.nextInt(0, lengthOfSet)
+        actualValue = values.elementAt(number)
+        reflexiveRelation.add(actualValue)
         }**/
 
         do {
@@ -121,7 +147,7 @@ object Set_Relation_Generation {
 
     }
 
-    fun symmetric(values: MutableList<Int>,symmetricRelation:MutableList<Int>): MutableList<Int> {
+    fun symmetric(values: MutableList<Int>, symmetricRelation: MutableList<Int>): MutableList<Int> {
         var lengthOfSet = values.size
         //var symmetricRelation: MutableList<Int> = mutableListOf<Int>()
 
@@ -130,8 +156,8 @@ object Set_Relation_Generation {
         //var number = Random.nextInt(0, 9)
 
         /**do {
-            symmetricRelation.add(number)
-            number = Random.nextInt(0, 9)
+        symmetricRelation.add(number)
+        number = Random.nextInt(0, 9)
         } while (symmetricRelation.size < amountOfNumbers)**/
 
 
@@ -202,21 +228,18 @@ object Set_Relation_Generation {
 
     }
 
-    fun transitive(relation: MutableList<Int>): Boolean {
+    fun transitive(relation: MutableList<Int>): MutableList<Any> {
         //var lengthOfSet = values.size
         var transitiveRelation = relation
 
-       // var noOfRelationPairs = Random.nextInt(3, 5)
+        // var noOfRelationPairs = Random.nextInt(3, 5)
 
         var amountOfNumbers = transitiveRelation.size
 
 
-
-        var number = Random.nextInt(0, 9)
-
         /**do {
-            transitiveRelation.add(number)
-            number = Random.nextInt(0, 9)
+        transitiveRelation.add(number)
+        number = Random.nextInt(0, 9)
         } while (transitiveRelation.size < amountOfNumbers)*/
 
         var i = 0 //Position of b in the relation list
@@ -227,14 +250,16 @@ object Set_Relation_Generation {
         var b: Int // b in relation
         var c: Int // c in relation
 
-        var pos1 = 0 //position of first a in (a,c)
-        var pos2 = 1 //position of first c in (a,c)
+        var pos1: Int //position of first a in (a,c)
+        var pos2: Int //position of first c in (a,c)
         var isTransitive = true //whether the relation is transitive or not
 
-        var positionInJ = 0
+        var positionInJ: Int
+        d("pos", "relation: $transitiveRelation")
 
         do {
             b = transitiveRelation.elementAt(i)
+            globalB = b
             d("Trans", "b:$b")
             k = 1
             positionInJ = 0
@@ -244,6 +269,7 @@ object Set_Relation_Generation {
             pos2 = 1
 
 
+
             if (i.rem(2) == 0) {
                 //Check through odd positions
                 do {
@@ -251,7 +277,7 @@ object Set_Relation_Generation {
                     k = k + 2
 
                 } while (k < amountOfNumbers)
-                d("Trans", "odd j:$j")
+
 
                 k = 1
 
@@ -259,23 +285,31 @@ object Set_Relation_Generation {
                 do {
                     if (j.elementAt(positionInJ) == b) {
                         a = transitiveRelation.elementAt(k - 1)
-                        d("Trans", "a:$a")
+                        globalA = a
+
+                        d("pos", "a:$a")
                         c = transitiveRelation.elementAt(i + 1)
-                        d("Trans", "c:$c")
+                        globalC = c
+                        d("pos", "c:$c")
                         do {
-                            if (a != transitiveRelation.elementAt(pos1) && c != transitiveRelation.elementAt(
-                                    pos2
-                                )
-                            ) {
-                                isTransitive = false
-                                break
-                            }else if (a == c){
-                                break
+                            if (a != c && c!=b) {
+                                if (a != transitiveRelation.elementAt(pos1) && c != transitiveRelation.elementAt(
+                                        pos2
+                                    )
+                                ) {
+                                    isTransitive = false
+                                    break
+                                } else if (a == c) {
+                                    break
+                                }
                             }
-                            pos1 = pos1 + 2
-                            pos2 = pos2 + 2
-                            d("Trans", "isTrans: $isTransitive")
-                        } while (pos2 < amountOfNumbers - 1)
+                                pos1 = pos1 + 2
+                                pos2 = pos2 + 2
+
+                            d("pos", "pos1: $pos1")
+                            d("pos", "pos1: $pos1")
+
+                        } while (pos2 < amountOfNumbers - 2)
 
                     }
                     k = k + 2
@@ -286,7 +320,7 @@ object Set_Relation_Generation {
                 k = 0
                 positionInJ = 0
                 //Check through even positions
-                d("Trans", "Wublub")
+
 
                 do {
                     j.add(transitiveRelation.elementAt(k))
@@ -299,25 +333,30 @@ object Set_Relation_Generation {
                 do {
                     if (j.elementAt(positionInJ) == b) {
                         a = transitiveRelation.elementAt(k + 1)
-                        d("Trans", "a:$a")
+                        globalA = a
+                        d("pos", "a:$a")
                         c = transitiveRelation.elementAt(i - 1)
-                        d("Trans", "a:$a")
+                        globalC = c
+                        d("pos", "a:$a")
                         do {
-                            if (a != transitiveRelation.elementAt(pos1) && c != transitiveRelation.elementAt(
-                                    pos2
-                                )
-                            ) {
-                                isTransitive = false
-                                break
+                            if (a != c && c!=b) {
+                                if (a != transitiveRelation.elementAt(pos1) && c != transitiveRelation.elementAt(
+                                        pos2
+                                    )
+                                ) {
+                                    d("pos", "fakeNews")
+                                    isTransitive = false
+                                    break
+                                } else if (a == c) {
+                                    break
+                                }
                             }
-                            else if (a == c){
-                                break
-                            }
-                            pos1 = pos1 + 2
-                            pos2 = pos2 + 2
-                            d("Trans", "pos1: $pos1")
-                            d("Trans", "pos2: $pos2")
-                        } while (pos2 < amountOfNumbers)
+                                pos1 = pos1 + 2
+                                pos2 = pos2 + 2
+                                d("pos", "pos1: $pos1")
+                                d("pos", "pos2: $pos2")
+
+                        } while (pos2 < amountOfNumbers - 2)
 
                     }
                     k = k + 2
@@ -328,9 +367,27 @@ object Set_Relation_Generation {
             d("Trans", " i $i")
 
         } while (i < amountOfNumbers)
-        d("Trans","$isTransitive")
 
-        return isTransitive //returns whether the relation is transtive or not
+        d("Pooper", "$isTransitive")
+        var returnList: MutableList<Any> = mutableListOf()
+        returnList.add(isTransitive)
+        returnList.add(globalA)
+        returnList.add(globalB)
+        returnList.add(globalC)
 
+        return returnList //returns whether the relation is transtive or not**and other values
+
+    }
+
+    fun getA(): Int {
+        return globalA
+    }
+
+    fun getB(): Int {
+        return globalB
+    }
+
+    fun getC(): Int {
+        return globalC
     }
 }
