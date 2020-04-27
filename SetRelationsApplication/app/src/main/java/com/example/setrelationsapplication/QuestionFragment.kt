@@ -208,7 +208,7 @@ class QuestionFragment : Fragment() {
 
         formatSet(set) //formats the set text
 
-        style = 1//Random.nextInt(1, 3)
+        style = 2//Random.nextInt(1, 3)
         d("Style", "$style")
         relation = Set_Relation_Generation.relationGenerator(set)
         if (style == 1) {
@@ -291,6 +291,8 @@ class QuestionFragment : Fragment() {
                     toTrans = transReturn.elementAt(0).toString().toBoolean()
                     relationVals = relation
                 } while (toTrans == false)
+                
+                Log.d("toTrans","$toTrans")
 
                 var a = transReturn.elementAt(1).toString().toInt()
                 var b = transReturn.elementAt(2).toString().toInt()
