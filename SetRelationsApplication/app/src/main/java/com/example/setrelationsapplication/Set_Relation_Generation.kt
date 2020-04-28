@@ -13,7 +13,7 @@ object Set_Relation_Generation {
      * @return a list of numbers
      */
     fun setGenerator(): MutableList<Int> {
-        val setLength = Random.nextInt(4, 6)
+        val setLength = Random.nextInt(3, 5)
         val setValues: MutableList<Int> = mutableListOf<Int>()
         var x = 2
         do {
@@ -46,7 +46,7 @@ object Set_Relation_Generation {
     fun relationGenerator(values: MutableList<Int>): MutableList<Int> {
         var lengthOfSet = values.size
         var createdRelation: MutableList<Int> = mutableListOf<Int>()
-        var noOfRelationPairs = Random.nextInt(3, 4)
+        var noOfRelationPairs = Random.nextInt(4, 6)
         var y = 0
         var i = 0
         var num1: Int
@@ -84,9 +84,75 @@ object Set_Relation_Generation {
 
     fun reflexive(values: MutableList<Int>, allReflexiveNum: MutableList<Int>): MutableList<Int> {
         var lengthOfSet = values.size
-        var reflexiveRelation: MutableList<Int> = mutableListOf<Int>()
+        var listOfPositions = mutableListOf<Int>()
+        var i = 0
 
-        var noOfRelationPairs = allReflexiveNum.size / 2
+       /** do {
+            listOfPositions.add(i)
+            i=i+2
+
+        }while (i<allReflexiveNum.size-1)**/
+
+
+        var set = values
+        var number:Int
+
+        //Ensures there is enough pairs to fit all reflexive pairs
+        if (allReflexiveNum.size/2 < values.size){
+            do {
+                number = Random.nextInt(0,9)
+                allReflexiveNum.add(number)
+            }while (allReflexiveNum.size/2 < values.size + 1)
+
+        }
+        d("Relation","$allReflexiveNum")
+
+        do {
+            do {
+                number = Random.nextInt(0,allReflexiveNum.size - 1) * 2
+            }while (number > allReflexiveNum.size-1)
+
+
+            if(listOfPositions.contains(number)){
+                do {
+                    number = Random.nextInt(0,allReflexiveNum.size - 1) * 2
+
+                }while (listOfPositions.contains(number) || number > allReflexiveNum.size - 1)
+                listOfPositions.add(number)
+            }else{
+                listOfPositions.add(number)
+            }
+            d("i","$i")
+            d("listOFPos","$listOfPositions")
+
+            i++
+        }while (i<lengthOfSet )
+
+        var x  = 0
+
+        do {
+            d("x","$x")
+            allReflexiveNum.set(listOfPositions.elementAt(x),set.elementAt(x))
+            allReflexiveNum.set(listOfPositions.elementAt(x) + 1,set.elementAt(x))
+
+            x++
+
+
+        } while (x<set.size)
+
+        d("finalRelation","$allReflexiveNum")
+
+
+
+
+        return allReflexiveNum
+
+
+
+
+
+
+        /**
 
         var x = 0
         var y = 0
@@ -141,9 +207,9 @@ object Set_Relation_Generation {
             actualValue = values.elementAt(number)
             reflexiveRelation.add(actualValue)
 
-        }
+        }**/
 
-        return reflexiveRelation
+
 
     }
 

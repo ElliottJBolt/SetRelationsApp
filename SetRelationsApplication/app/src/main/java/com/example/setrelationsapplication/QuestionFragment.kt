@@ -208,7 +208,7 @@ class QuestionFragment : Fragment() {
 
         formatSet(set) //formats the set text
 
-        style = 2//Random.nextInt(1, 3)
+        style = 1//Random.nextInt(1, 3)
         d("Style", "$style")
         relation = Set_Relation_Generation.relationGenerator(set)
         if (style == 1) {
@@ -392,7 +392,7 @@ class QuestionFragment : Fragment() {
                     relationText.text = relationText.text as String + "(X,"
 
                 } else {
-                    relationText.text = relationText.text as String + "X"
+                    relationText.text = relationText.text as String + "X)"
                 }
 
 
