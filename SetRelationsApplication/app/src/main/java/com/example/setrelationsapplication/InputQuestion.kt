@@ -5,9 +5,9 @@ import kotlin.random.Random
 
 object InputQuestion {
 
-    fun reflexive(relation:MutableList<Int>):MutableList<Int>{
+    fun reflexive(relation: MutableList<Int>): MutableList<Int> {
         var sizeOfSet = relation.size
-        var value = Random.nextInt(0,sizeOfSet)
+        var value = Random.nextInt(0, sizeOfSet)
         var firstNum: Int
         var secondNum: Int
         var listOfValuesAndPos = mutableListOf<Int>()
@@ -39,35 +39,35 @@ object InputQuestion {
 
                 }
             }
-        }while (reflexivePair == false)
+        } while (reflexivePair == false)
 
         return listOfValuesAndPos
     }
 
-    fun symmetric(relation: MutableList<Int>):MutableList<Int>{
+    fun symmetric(relation: MutableList<Int>): MutableList<Int> {
         var sizeOfRelation = relation.size
         var i = 0
         var j = i + 3
-        var firstNumFirstPair:Int
-        var secondNumFirstPair:Int
-        var firstNumSecPair:Int
-        var secondNumSecPair:Int
+        var firstNumFirstPair: Int
+        var secondNumFirstPair: Int
+        var firstNumSecPair: Int
+        var secondNumSecPair: Int
         var listOfValuesAndPos = mutableListOf<Int>()
 
         do {
             j = i + 3
 
             firstNumFirstPair = relation.elementAt(i)
-            secondNumFirstPair = relation.elementAt(i+1)
+            secondNumFirstPair = relation.elementAt(i + 1)
 
-            do{
+            do {
                 Log.d("Test", "$j")
-                firstNumSecPair = relation.elementAt(j-1)
+                firstNumSecPair = relation.elementAt(j - 1)
                 secondNumSecPair = relation.elementAt(j)
 
 
 
-                if (firstNumFirstPair == secondNumSecPair && secondNumFirstPair == firstNumSecPair){
+                if (firstNumFirstPair == secondNumSecPair && secondNumFirstPair == firstNumSecPair) {
 
                     listOfValuesAndPos.add(firstNumFirstPair)
                     listOfValuesAndPos.add(secondNumSecPair)
@@ -79,117 +79,61 @@ object InputQuestion {
                 }
                 j = j + 2
 
-            }while (j < sizeOfRelation )
+            } while (j < sizeOfRelation)
 
             i = i + 2
-        }while (i<sizeOfRelation - 2)
+        } while (i < sizeOfRelation - 2)
 
         return listOfValuesAndPos
     }
 
-    fun transitive(relation: MutableList<Int>,a:Int,b:Int,c:Int):MutableList<Int>{
-        var whichNum = Random.nextInt(1,4)
+    fun transitive(relation: MutableList<Int>): MutableList<Int> {
+        var whichNum = Random.nextInt(1, 4)
         var listOfValuesAndPos = mutableListOf<Int>()
         var i = 0
-        var num1:Int
-        var num2: Int
+        var num1: Int
+        var pos1: Int
+        var num2:Int
+        var pos2:Int
+
         Log.d("Toot", "$whichNum")
         Log.d("Toot", "$relation")
 
-
         if (whichNum == 1){
-            whichNum = a
-            do {
-                num1 = relation.elementAt(i)
+            num1 = relation.elementAt(relation.size - 6)
+            pos1 = relation.elementAt(relation.size - 3)
+            num2 = relation.elementAt(relation.size -5)
+            pos2 = relation.elementAt(relation.size - 3) +1
 
-                if (num1 == a && i.rem(2)==0){
-                    Log.d("Toot1", "$num1")
-                        num2 = relation.elementAt(i+1)
-                        if (num2 == b || num2 == c){
-                            Log.d("Toot1", "$num2")
-                            listOfValuesAndPos.add(num1)
-                            listOfValuesAndPos.add(num2)
-                            listOfValuesAndPos.add(i)
-                            listOfValuesAndPos.add(i+1)
-                            break
 
-                        }
-
-                }
-                i++
-
-            }while ( i < relation.size)
-
-        }else if(whichNum == 2){
-            whichNum = b
-            do {
-                num1 = relation.elementAt(i)
-                if (num1 == b&& i.rem(2)==0){
-                    Log.d("Toot2", "$num1")
-                    num2 = relation.elementAt(i+1)
-                    if (num2 == c){
-                        Log.d("Toot2", "$num2")
-                        listOfValuesAndPos.add(num1)
-                        listOfValuesAndPos.add(num2)
-                        listOfValuesAndPos.add(i)
-                        listOfValuesAndPos.add(i+1)
-                        break
-                    }
-
-                }else if (num1 == b && i.rem(2) ==1){
-                    Log.d("Toot3", "$num1")
-                    num2 = relation.elementAt(i-1)
-
-                    if (num2 == a){
-                        Log.d("Toot3", "$num2")
-                        listOfValuesAndPos.add(num1)
-                        listOfValuesAndPos.add(num2)
-                        listOfValuesAndPos.add(i)
-                        listOfValuesAndPos.add(i-1)
-                        break
-                    }
-                }
-                i++
-            }while (i < relation.size)
+        }else if (whichNum ==2){
+            num1 = relation.elementAt(relation.size - 5)
+            pos1 = relation.elementAt(relation.size-2)
+            num2 = relation.elementAt(relation.size - 4)
+            pos2 = relation.elementAt(relation.size-2)+1
 
         }else{
-            whichNum = c
-            do {
-                num1 = relation.elementAt(i)
-                if (num1 == c && i.rem(2)==1){
-                    Log.d("Toot4", "$num1")
-                    num2 = relation.elementAt(i-1)
-                    if (num2 == a){
-                        Log.d("Toot4", "$num2")
-                        listOfValuesAndPos.add(num1)
-                        listOfValuesAndPos.add(num2)
-                        listOfValuesAndPos.add(i)
-                        listOfValuesAndPos.add(i-1)
-                        break
-
-
-                    }else if(num2 == b){
-                        Log.d("Toot5", "$num2")
-                        listOfValuesAndPos.add(num1)
-                        listOfValuesAndPos.add(num2)
-                        listOfValuesAndPos.add(i)
-                        listOfValuesAndPos.add(i-1)
-                        break
-
-                    }
-                }
-                i++
-
-            }while (i<relation.size)
+            num1 = relation.elementAt(relation.size-6)
+            pos1 = relation.elementAt(relation.size-1)
+            num2 = relation.elementAt(relation.size - 4)
+            pos2 = relation.elementAt(relation.size-1)+1
 
         }
-        Log.d("Toot6", "$listOfValuesAndPos")
-
+        listOfValuesAndPos.add(num1)
+        listOfValuesAndPos.add(num2)
+        listOfValuesAndPos.add(pos1)
+        listOfValuesAndPos.add(pos2)
         return listOfValuesAndPos
-
     }
 
 
-
-
 }
+
+
+
+
+
+
+
+
+

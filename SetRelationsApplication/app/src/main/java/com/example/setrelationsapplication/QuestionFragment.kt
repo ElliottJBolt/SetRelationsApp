@@ -202,7 +202,7 @@ class QuestionFragment : Fragment() {
         var choice = arguments?.getString(Choice)
 
         var matchingType = true
-        var transReturn: MutableList<Any>
+
         var relation: MutableList<Int>
         var hiddenValues: MutableList<Int>
 
@@ -222,8 +222,8 @@ class QuestionFragment : Fragment() {
             if (type == "transitive") {
                 //relation = Set_Relation_Generation.relationGenerator(set)
                 formatRelation(relation)
-                transReturn = Set_Relation_Generation.transitive(relation)
-                var trans = transReturn.elementAt(0).toString().toBoolean()
+                var trans = Set_Relation_Generation.transitive(relation)
+
 
                 if (trans == true) {
                     matchingType = true
@@ -283,23 +283,28 @@ class QuestionFragment : Fragment() {
 
             if (type == "transitive") {
 
-                var toTrans = false
+                relation = Set_Relation_Generation.relationGenerator(set)
 
-                do {
-                    relation = Set_Relation_Generation.relationGenerator(set)
-                    transReturn = Set_Relation_Generation.transitive(relation)
-                    toTrans = transReturn.elementAt(0).toString().toBoolean()
-                    relationVals = relation
-                } while (toTrans == false)
-                
-                Log.d("toTrans","$toTrans")
+                var transRelation = Set_Relation_Generation.abcTransitive(set,relation)
 
-                var a = transReturn.elementAt(1).toString().toInt()
-                var b = transReturn.elementAt(2).toString().toInt()
-                var c = transReturn.elementAt(3).toString().toInt()
-                hiddenValues = InputQuestion.transitive(relation, a, b, c)
+                hiddenValues = InputQuestion.transitive(transRelation)
                 hiddenNums = hiddenValues
-                formatRelationSecondQuestion(relation, hiddenValues)
+
+                var size = transRelation.size - 1
+                transRelation.removeAt(size)
+                transRelation.removeAt(size-1)
+                transRelation.removeAt(size-2)
+                transRelation.removeAt(size-3)
+                transRelation.removeAt(size-4)
+                transRelation.removeAt(size-5)
+                d("Thing","$transRelation")
+
+
+                relationVals = transRelation
+
+
+
+                formatRelationSecondQuestion(transRelation, hiddenValues)
 
 
             } else if (type == "reflexive") {

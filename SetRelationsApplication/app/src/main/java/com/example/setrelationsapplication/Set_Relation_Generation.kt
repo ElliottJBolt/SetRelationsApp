@@ -48,11 +48,11 @@ object Set_Relation_Generation {
         var createdRelation: MutableList<Int> = mutableListOf<Int>()
         var noOfRelationPairs = Random.nextInt(3, 4)
         var y = 0
-        var i =0
-        var num1:Int
-        var num2:Int
-        var num3:Int
-        var num4:Int
+        var i = 0
+        var num1: Int
+        var num2: Int
+        var num3: Int
+        var num4: Int
 
         do {
             var number = Random.nextInt(0, lengthOfSet)
@@ -66,18 +66,18 @@ object Set_Relation_Generation {
 
         do {
             num1 = createdRelation.elementAt(i)
-            num2 = createdRelation.elementAt(i+2)
-            if (num1 == num2){
-                num3 = createdRelation.elementAt(i+1)
-                num4 = createdRelation.elementAt(i+3)
-                if (num3 == num4){
-                    num1 = Random.nextInt(0,lengthOfSet)
+            num2 = createdRelation.elementAt(i + 2)
+            if (num1 == num2) {
+                num3 = createdRelation.elementAt(i + 1)
+                num4 = createdRelation.elementAt(i + 3)
+                if (num3 == num4) {
+                    num1 = Random.nextInt(0, lengthOfSet)
                     num1 = values.elementAt(num1)
-                    createdRelation.set(i,num1)
+                    createdRelation.set(i, num1)
                 }
             }
             i++
-        }while (i < createdRelation.size - 3 )
+        } while (i < createdRelation.size - 3)
 
         return createdRelation
     }
@@ -228,7 +228,7 @@ object Set_Relation_Generation {
 
     }
 
-    fun transitive(relation: MutableList<Int>): MutableList<Any> {
+    fun transitive(relation: MutableList<Int>): Boolean {
         //var lengthOfSet = values.size
         var transitiveRelation = relation
 
@@ -292,7 +292,7 @@ object Set_Relation_Generation {
                         globalC = c
                         d("pos", "c:$c")
                         do {
-                            if (a != c && c!=b) {
+                            if (a != c && c != b) {
                                 if (a != transitiveRelation.elementAt(pos1) && c != transitiveRelation.elementAt(
                                         pos2
                                     )
@@ -303,8 +303,8 @@ object Set_Relation_Generation {
                                     break
                                 }
                             }
-                                pos1 = pos1 + 2
-                                pos2 = pos2 + 2
+                            pos1 = pos1 + 2
+                            pos2 = pos2 + 2
 
                             d("pos", "pos1: $pos1")
                             d("pos", "pos1: $pos1")
@@ -339,7 +339,7 @@ object Set_Relation_Generation {
                         globalC = c
                         d("pos", "a:$a")
                         do {
-                            if (a != c && c!=b) {
+                            if (a != c && c != b) {
                                 if (a != transitiveRelation.elementAt(pos1) && c != transitiveRelation.elementAt(
                                         pos2
                                     )
@@ -351,10 +351,10 @@ object Set_Relation_Generation {
                                     break
                                 }
                             }
-                                pos1 = pos1 + 2
-                                pos2 = pos2 + 2
-                                d("pos", "pos1: $pos1")
-                                d("pos", "pos2: $pos2")
+                            pos1 = pos1 + 2
+                            pos2 = pos2 + 2
+                            d("pos", "pos1: $pos1")
+                            d("pos", "pos2: $pos2")
 
                         } while (pos2 < amountOfNumbers - 2)
 
@@ -369,25 +369,96 @@ object Set_Relation_Generation {
         } while (i < amountOfNumbers)
 
         d("Pooper", "$isTransitive")
-        var returnList: MutableList<Any> = mutableListOf()
-        returnList.add(isTransitive)
-        returnList.add(globalA)
-        returnList.add(globalB)
-        returnList.add(globalC)
 
-        return returnList //returns whether the relation is transtive or not**and other values
+
+        return isTransitive //returns whether the relation is transtive or not**and other values
 
     }
 
-    fun getA(): Int {
-        return globalA
+    fun abcTransitive(set: MutableList<Int>, relation: MutableList<Int>):MutableList<Int> {
+        d("og","$relation")
+        var number = Random.nextInt(0, set.size)
+        var a = set.elementAt(number)
+
+        number = Random.nextInt(0, set.size)
+        var b = set.elementAt(number)
+
+        if (b == a) {
+            do {
+                number = Random.nextInt(0, set.size)
+                b = set.elementAt(number)
+            } while (b == a)
+        }
+
+        number = Random.nextInt(0, set.size)
+        var c = set.elementAt(number)
+
+        if (c == a || c == b) {
+            do {
+                number = Random.nextInt(0, set.size)
+                c = set.elementAt(number)
+            } while (c == a || c == b)
+        }
+
+        var positionOne = Random.nextInt(0, relation.size - 1)
+
+        if (positionOne.rem(2) == 1) {
+            do {
+                positionOne = Random.nextInt(0, relation.size - 1)
+            } while (positionOne.rem(2) == 1)
+        }
+        d("position1","$positionOne")
+
+        relation.set(positionOne,a)
+        relation.set(positionOne + 1,b)
+        d("Aftera","$relation")
+
+
+
+        var positionTwo = Random.nextInt(0, relation.size - 1)
+        if (positionTwo == positionOne || positionTwo.rem(2)==1) {
+            do {
+                positionTwo = Random.nextInt(0, relation.size - 1)
+            } while (positionTwo == positionOne || positionTwo.rem(2)==1)
+        }
+        d("position2","$positionTwo")
+
+        relation.set(positionTwo,b)
+        relation.set(positionTwo + 1,c)
+        d("Afterb","$relation")
+
+
+
+        var positionThree = Random.nextInt(0,relation.size-1)
+        if (positionThree == positionOne || positionThree == positionTwo || positionThree.rem(2)==1)
+        {
+            do {
+                positionThree = Random.nextInt(0,relation.size-1)
+            }while (positionThree == positionOne || positionThree == positionTwo || positionThree.rem(2)==1)
+        }
+        d("position3","$positionThree")
+        d("generator","$relation")
+
+        relation.set(positionThree,a)
+        relation.set(positionThree+1,c)
+        d("After 3","$relation")
+
+
+        d("generator2","$relation")
+        d("a","$a")
+        d("b","$b")
+        d("c","$c")
+
+        relation.add(a)
+        relation.add(b)
+        relation.add(c)
+        relation.add(positionOne)
+        relation.add(positionTwo)
+        relation.add(positionThree)
+
+        return relation
+
     }
 
-    fun getB(): Int {
-        return globalB
-    }
 
-    fun getC(): Int {
-        return globalC
-    }
 }
