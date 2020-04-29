@@ -39,6 +39,7 @@ object InputQuestion {
 
                 }
             }
+            value = Random.nextInt(0, sizeOfSet)
         } while (reflexivePair == false)
 
         return listOfValuesAndPos

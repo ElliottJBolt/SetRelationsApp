@@ -19,7 +19,6 @@ class ApplicationActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         supportFragmentManager.beginTransaction().replace(R.id.frameLayout, HomeFragment())
-            .addToBackStack(null)
             .commit()
 
 
@@ -37,5 +36,7 @@ class ApplicationActivity : AppCompatActivity() {
         val db = FirebaseFirestore.getInstance()
 
     }
+
+
 
 }

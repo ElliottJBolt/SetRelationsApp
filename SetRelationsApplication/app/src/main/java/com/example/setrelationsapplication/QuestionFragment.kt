@@ -61,6 +61,8 @@ class QuestionFragment : Fragment() {
         var result: String
 
 
+
+
         yesButton.setOnClickListener {
             yes = true
 
@@ -208,7 +210,7 @@ class QuestionFragment : Fragment() {
 
         formatSet(set) //formats the set text
 
-        style = 1//Random.nextInt(1, 3)
+        style = Random.nextInt(1, 3)
         d("Style", "$style")
         relation = Set_Relation_Generation.relationGenerator(set)
         if (style == 1) {
@@ -309,6 +311,10 @@ class QuestionFragment : Fragment() {
 
             } else if (type == "reflexive") {
                 relation = Set_Relation_Generation.reflexive(set, relation)
+                relationVals = relation
+                hiddenValues = InputQuestion.reflexive(relation)
+                hiddenNums = hiddenValues
+                formatRelationSecondQuestion(relation,hiddenValues)
 
             } else if (type == "symmetric") {
                 relation = Set_Relation_Generation.symmetric(set, relation)

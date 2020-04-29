@@ -422,7 +422,7 @@ object Set_Relation_Generation {
                             d("pos", "pos1: $pos1")
                             d("pos", "pos2: $pos2")
 
-                        } while (pos2 < amountOfNumbers - 2)
+                        } while (pos1 < amountOfNumbers-2)
 
                     }
                     k = k + 2

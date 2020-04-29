@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -18,6 +19,7 @@ import kotlinx.android.synthetic.main.fragment_results.*
  * A simple [Fragment] subclass.
  */
 class ResultsFragment : Fragment() {
+    private var globalScoreList = mutableListOf<Int>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,9 +40,18 @@ class ResultsFragment : Fragment() {
         val refCount = arguments!!.getInt(reflexiveCount)
         val mixedCount = arguments!!.getInt(mixedCount)
         val db =FirebaseFirestore.getInstance()
-        var whichResult:String
-
+        var whichResult = "transitive"
         var document:DocumentReference
+
+        //Users transitive results are loaded in by default before they make a choice
+        /**document = db.collection("users").document(user).collection("questions").document("transitive")
+        getResults(whichResult,document,transCount)
+        d("ScoreList", "$globalScoreList")
+
+        scoreRecylcer.apply {
+            layoutManager = LinearLayoutManager(activity)
+            adapter = ScoresAdapter(globalScoreList)
+        }**/
 
 
 
@@ -73,7 +84,13 @@ class ResultsFragment : Fragment() {
     fun getResults(result:String,document:DocumentReference,maxCount:Int){
         document.get().addOnSuccessListener { document ->
                 d("results","$result")
-            var count = 1
+            var count:Int
+            if (maxCount > 10){
+                 count = maxCount - 9
+            }else{
+                count = 1
+            }
+
             var scoreList:MutableList<Int>  = mutableListOf<Int>()
             do {
                 val testData = document.getLong("score "+count)
@@ -83,14 +100,16 @@ class ResultsFragment : Fragment() {
                 //testView.setText("score "+count+": " + testString)
 
             }while (count <= maxCount )
-            testView.setText("$scoreList")
+
+            scoreRecylcer.apply {
+                layoutManager = LinearLayoutManager(activity)
+                adapter = ScoresAdapter(scoreList)
+            }
 
 
             }
 
         }
-
-
 
 
     companion object {

@@ -120,8 +120,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun replaceFragment(fragment: Fragment){
-        fragmentManager?.beginTransaction()?.replace(R.id.frameLayout, fragment)
-            ?.addToBackStack(null)
+        fragmentManager?.beginTransaction()?.replace(R.id.frameLayout, fragment)?.addToBackStack(null)
             ?.commit()
 
     }
