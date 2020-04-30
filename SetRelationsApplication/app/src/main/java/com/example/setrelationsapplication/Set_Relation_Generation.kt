@@ -142,24 +142,13 @@ object Set_Relation_Generation {
 
 
 
-        
-
-
-
     }
 
     fun symmetric(values: MutableList<Int>, symmetricRelation: MutableList<Int>): MutableList<Int> {
         var lengthOfSet = values.size
-        //var symmetricRelation: MutableList<Int> = mutableListOf<Int>()
 
-        //var noOfRelationPairs = Random.nextInt(3, 7)
-        var amountOfNumbers = symmetricRelation.size + 1 //Might need to remove + 1
-        //var number = Random.nextInt(0, 9)
+        var amountOfNumbers = symmetricRelation.size //Might need to remove + 1
 
-        /**do {
-        symmetricRelation.add(number)
-        number = Random.nextInt(0, 9)
-        } while (symmetricRelation.size < amountOfNumbers)**/
 
 
         var selectNumber = Random.nextInt(0, lengthOfSet)
@@ -174,14 +163,13 @@ object Set_Relation_Generation {
 
             } while (num2 == num1)
         }
-        d("Elliott", "num1: $num1")
-        d("Elliott", "num2: $num2")
+
 
         var positionPair1 = Random.nextInt(0, amountOfNumbers / 2 - 1)
         symmetricRelation.set(positionPair1, num1)
 
         var numberOneFirst: Boolean
-        d("Elliott", "position1: $positionPair1")
+
 
 
         if (positionPair1.rem(2) == 1) {
@@ -209,20 +197,20 @@ object Set_Relation_Generation {
                 positionPair2 = Random.nextInt(amountOfNumbers / 2, amountOfNumbers - 1)
             } while (positionPair2.rem(2) == 0)
         }
-        d("Elliott", "position2: $positionPair2")
+
 
         symmetricRelation.set(positionPair2, num2)
 
         if (positionPair2.rem(2) == 0 && numberOneFirst == false) {
             symmetricRelation.set(positionPair2, num1)
             symmetricRelation.set(positionPair2 + 1, num2)
-            d("Elliott", "First if active")
+
 
 
         } else if (positionPair2.rem(2) == 1 && numberOneFirst == true) {
             symmetricRelation.set(positionPair2, num1)
             symmetricRelation.set(positionPair2 - 1, num2)
-            d("Elliott", "Second if active")
+
         }
 
         return symmetricRelation
@@ -238,11 +226,6 @@ object Set_Relation_Generation {
         var amountOfNumbers = transitiveRelation.size
 
 
-        /**do {
-        transitiveRelation.add(number)
-        number = Random.nextInt(0, 9)
-        } while (transitiveRelation.size < amountOfNumbers)*/
-
         var i = 0 //Position of b in the relation list
         var k: Int //Position of other b
         var j: MutableList<Int> = mutableListOf<Int>() //Variable to see if b's are the same
@@ -256,12 +239,12 @@ object Set_Relation_Generation {
         var isTransitive = true //whether the relation is transitive or not
 
         var positionInJ: Int
-        d("pos", "relation: $transitiveRelation")
+
 
         do {
             b = transitiveRelation.elementAt(i)
             globalB = b
-            d("Trans", "b:$b")
+
             k = 1
             positionInJ = 0
             j.clear()
@@ -288,10 +271,10 @@ object Set_Relation_Generation {
                         a = transitiveRelation.elementAt(k - 1)
                         globalA = a
 
-                        d("pos", "a:$a")
+
                         c = transitiveRelation.elementAt(i + 1)
                         globalC = c
-                        d("pos", "c:$c")
+
                         do {
                             if (a != c && c != b) {
                                 if (a != transitiveRelation.elementAt(pos1) && c != transitiveRelation.elementAt(
@@ -307,8 +290,6 @@ object Set_Relation_Generation {
                             pos1 = pos1 + 2
                             pos2 = pos2 + 2
 
-                            d("pos", "pos1: $pos1")
-                            d("pos", "pos1: $pos1")
 
                         } while (pos2 < amountOfNumbers - 2)
 
@@ -327,7 +308,7 @@ object Set_Relation_Generation {
                     j.add(transitiveRelation.elementAt(k))
                     k = k + 2
                 } while (k <= amountOfNumbers - 2)
-                d("Trans", "even j:$j")
+
 
                 k = 0
 
@@ -335,17 +316,17 @@ object Set_Relation_Generation {
                     if (j.elementAt(positionInJ) == b) {
                         a = transitiveRelation.elementAt(k + 1)
                         globalA = a
-                        d("pos", "a:$a")
+
                         c = transitiveRelation.elementAt(i - 1)
                         globalC = c
-                        d("pos", "a:$a")
+
                         do {
                             if (a != c && c != b) {
                                 if (a != transitiveRelation.elementAt(pos1) && c != transitiveRelation.elementAt(
                                         pos2
                                     )
                                 ) {
-                                    d("pos", "fakeNews")
+
                                     isTransitive = false
                                     break
                                 } else if (a == c) {
@@ -354,8 +335,7 @@ object Set_Relation_Generation {
                             }
                             pos1 = pos1 + 2
                             pos2 = pos2 + 2
-                            d("pos", "pos1: $pos1")
-                            d("pos", "pos2: $pos2")
+
 
                         } while (pos1 < amountOfNumbers-2)
 
@@ -365,11 +345,9 @@ object Set_Relation_Generation {
                 } while (k <= amountOfNumbers - 2)
             }
             i++
-            d("Trans", " i $i")
+
 
         } while (i < amountOfNumbers)
-
-        d("Pooper", "$isTransitive")
 
 
         return isTransitive //returns whether the relation is transtive or not**and other values
@@ -377,7 +355,7 @@ object Set_Relation_Generation {
     }
 
     fun abcTransitive(set: MutableList<Int>, relation: MutableList<Int>):MutableList<Int> {
-        d("og","$relation")
+
         var number = Random.nextInt(0, set.size)
         var a = set.elementAt(number)
 
@@ -408,13 +386,10 @@ object Set_Relation_Generation {
                 positionOne = Random.nextInt(0, relation.size - 1)
             } while (positionOne.rem(2) == 1)
         }
-        d("position1","$positionOne")
+
 
         relation.set(positionOne,a)
         relation.set(positionOne + 1,b)
-        d("Aftera","$relation")
-
-
 
         var positionTwo = Random.nextInt(0, relation.size - 1)
         if (positionTwo == positionOne || positionTwo.rem(2)==1) {
@@ -422,11 +397,11 @@ object Set_Relation_Generation {
                 positionTwo = Random.nextInt(0, relation.size - 1)
             } while (positionTwo == positionOne || positionTwo.rem(2)==1)
         }
-        d("position2","$positionTwo")
+
 
         relation.set(positionTwo,b)
         relation.set(positionTwo + 1,c)
-        d("Afterb","$relation")
+
 
 
 
@@ -437,19 +412,13 @@ object Set_Relation_Generation {
                 positionThree = Random.nextInt(0,relation.size-1)
             }while (positionThree == positionOne || positionThree == positionTwo || positionThree.rem(2)==1)
         }
-        d("position3","$positionThree")
-        d("generator","$relation")
+
 
         relation.set(positionThree,a)
         relation.set(positionThree+1,c)
-        d("After 3","$relation")
 
 
-        d("generator2","$relation")
-        d("a","$a")
-        d("b","$b")
-        d("c","$c")
-
+        //The values and positions are appended to be used with the hidden value questions
         relation.add(a)
         relation.add(b)
         relation.add(c)

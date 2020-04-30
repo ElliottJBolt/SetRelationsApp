@@ -62,7 +62,7 @@ object InputQuestion {
             secondNumFirstPair = relation.elementAt(i + 1)
 
             do {
-                Log.d("Test", "$j")
+
                 firstNumSecPair = relation.elementAt(j - 1)
                 secondNumSecPair = relation.elementAt(j)
 
@@ -91,14 +91,12 @@ object InputQuestion {
     fun transitive(relation: MutableList<Int>): MutableList<Int> {
         var whichNum = Random.nextInt(1, 4)
         var listOfValuesAndPos = mutableListOf<Int>()
-        var i = 0
         var num1: Int
         var pos1: Int
         var num2:Int
         var pos2:Int
 
-        Log.d("Toot", "$whichNum")
-        Log.d("Toot", "$relation")
+
 
         if (whichNum == 1){
             num1 = relation.elementAt(relation.size - 6)

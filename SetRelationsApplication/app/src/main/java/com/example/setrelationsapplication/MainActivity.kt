@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         createAccountButton.setOnClickListener {
+            if (emailText.text.toString().isNotBlank() && passwordText.text.toString().isNotBlank() ){
             createAccount(emailText.text.toString(),passwordText.text.toString())
             val email = emailText.text.toString()
             val user = mapOf(
@@ -58,6 +59,9 @@ class MainActivity : AppCompatActivity() {
                 .addOnFailureListener { e ->
                     d( "db","Error adding document")
                 }
+            }else   {
+                Toast.makeText(this,"E-mail or password field is blank",Toast.LENGTH_SHORT).show()
+            }
 
 
 
@@ -161,10 +165,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun resetUI(){
-        emailText.text.clear()
-        passwordText.text.clear()
-    }
+
 
     private fun updateUI(user: FirebaseUser?){
 

@@ -34,13 +34,23 @@ class Set_Relation_GenerationTest {
 
     @Test
     fun symmetric() {
+        var list = mutableListOf<Int>(1,2,3)
+        var list2 = mutableListOf<Int>(1,2,3,4,5,6,7,8)
+        Set_Relation_Generation.reflexive(list,list2)
+
+
     }
 
     @Test
     fun transitive() {
+        var list2 = mutableListOf<Int>(1,2,3,4,5,6,7,8)
+        Set_Relation_Generation.transitive(list2)
     }
 
     @Test
     fun abcTransitive() {
+        var list = mutableListOf<Int>(1,2,3)
+        var list2 = mutableListOf<Int>(1,2,3,4,5,6,7,8)
+        Set_Relation_Generation.abcTransitive(list,list2)
     }
 }
