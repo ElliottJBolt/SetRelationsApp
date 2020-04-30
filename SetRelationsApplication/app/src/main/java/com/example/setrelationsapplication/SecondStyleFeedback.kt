@@ -1,6 +1,7 @@
 package com.example.setrelationsapplication
 
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -14,13 +15,15 @@ import kotlinx.android.synthetic.main.fragment_feedback_fragment_two.*
  * A simple [Fragment] subclass.
  */
 class SecondStyleFeedback : Fragment() {
+    private var root: View? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_second_style_feedback, container, false)
+        root = inflater.inflate(R.layout.fragment_second_style_feedback, container, false)
+        return  root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -41,10 +44,12 @@ class SecondStyleFeedback : Fragment() {
 
         if (answer!!.toInt() == correctAnswer ){
             correctText.setText("Correct")
+            root!!.setBackgroundColor(Color.parseColor("#90EE90"))
             feedbackText.isVisible = false
 
         }else{
             correctText.setText("Incorrect")
+            root!!.setBackgroundColor(Color.parseColor("#FFCCBB"))
             feedbackText.isVisible = true
             feedbackText.setText("The missing value was:" + correctAnswer)
         }

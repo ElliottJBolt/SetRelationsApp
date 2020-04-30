@@ -87,11 +87,7 @@ object Set_Relation_Generation {
         var listOfPositions = mutableListOf<Int>()
         var i = 0
 
-       /** do {
-            listOfPositions.add(i)
-            i=i+2
 
-        }while (i<allReflexiveNum.size-1)**/
 
 
         var set = values
@@ -105,7 +101,6 @@ object Set_Relation_Generation {
             }while (allReflexiveNum.size/2 < values.size + 1)
 
         }
-        d("Relation","$allReflexiveNum")
 
         do {
             do {
@@ -122,8 +117,7 @@ object Set_Relation_Generation {
             }else{
                 listOfPositions.add(number)
             }
-            d("i","$i")
-            d("listOFPos","$listOfPositions")
+
 
             i++
         }while (i<lengthOfSet )
@@ -131,7 +125,7 @@ object Set_Relation_Generation {
         var x  = 0
 
         do {
-            d("x","$x")
+
             allReflexiveNum.set(listOfPositions.elementAt(x),set.elementAt(x))
             allReflexiveNum.set(listOfPositions.elementAt(x) + 1,set.elementAt(x))
 
@@ -139,10 +133,6 @@ object Set_Relation_Generation {
 
 
         } while (x<set.size)
-
-        d("finalRelation","$allReflexiveNum")
-
-
 
 
         return allReflexiveNum
@@ -152,62 +142,7 @@ object Set_Relation_Generation {
 
 
 
-        /**
-
-        var x = 0
-        var y = 0
-        var number: Int
-        var actualValue: Int
-
-
-        //old code before takinga  relation as an input
-        /** var allReflexiveNum: MutableList<Int> = mutableListOf<Int>()
-
-        do {
-        allReflexiveNum.add(values.elementAt(x))
-        x++
-        } while (x < values.size)**/
-
-        var allReflexNumLength = allReflexiveNum.size
-
-        //allReflexiveNum.shuffle()
-
-        val randomNum = Random.nextInt(1, 2)
-
-        /** if (randomNum.rem(2) == 1) {
-        number = Random.nextInt(0, lengthOfSet)
-        actualValue = values.elementAt(number)
-        reflexiveRelation.add(actualValue)
-        number = Random.nextInt(0, lengthOfSet)
-        actualValue = values.elementAt(number)
-        reflexiveRelation.add(actualValue)
-        }**/
-
-        do {
-            var reflexiveNumber = allReflexiveNum.first()
-            var orderedPairValue: Int
-
-            orderedPairValue = reflexiveNumber
-            reflexiveRelation.add(orderedPairValue)
-            reflexiveRelation.add(orderedPairValue)
-
-            allReflexiveNum.removeAt(0)
-            y++
-
-
-        } while (y < allReflexNumLength)
-
-        if (allReflexNumLength < noOfRelationPairs) {
-
-            number = Random.nextInt(0, lengthOfSet)
-            actualValue = values.elementAt(number)
-            reflexiveRelation.add(actualValue)
-
-            number = Random.nextInt(0, lengthOfSet)
-            actualValue = values.elementAt(number)
-            reflexiveRelation.add(actualValue)
-
-        }**/
+        
 
 
 

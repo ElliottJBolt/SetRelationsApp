@@ -8,9 +8,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_question.*
+import kotlinx.android.synthetic.main.fragment_results.*
 import kotlin.random.Random
 
 
@@ -56,9 +58,11 @@ class QuestionFragment : Fragment() {
 
         var count = 0
         val userToString = user.toString()
-
-
         var result: String
+
+
+
+
 
 
 
@@ -129,10 +133,9 @@ class QuestionFragment : Fragment() {
         }
 
         submitButton.setOnClickListener {
+
+        if (answerInput.text.toString().isNotBlank()||answerInput.text.toString().isNotEmpty()){
             var userAnswer = answerInput.getText().toString().toInt()
-
-            Log.d("Answer", "$userAnswer")
-
             count++
             if (count < 10) {
 
@@ -154,13 +157,16 @@ class QuestionFragment : Fragment() {
 
             } else {
                 val score = mapOf(
-                    "score" + numAttempts to numCorrectAnswers
+                    "score " + numAttempts to numCorrectAnswers
                 )
                 dataBase.collection("users").document(userToString).collection("questions")
                     .document(choice.toString()).update(score)
                 fragmentManager?.popBackStackImmediate()
 
             }
+        }else{
+            Toast.makeText(activity,"Please enter an answer",Toast.LENGTH_SHORT).show()
+        }
 
 
         }

@@ -46,6 +46,12 @@ class FeedbackFragment : Fragment() {
         Log.d("textTest", "$answer")
         Log.d("textTest", "$result")
 
+        if (result == "Incorrect"){
+            root!!.setBackgroundColor(Color.parseColor("#FFCCBB"))
+        }else{
+            root!!.setBackgroundColor(Color.parseColor("#90EE90"))
+        }
+
         if (result == "Incorrect" && answer == false && relation == "reflexive"){
             Log.d("textTest", "YYYY")
             if (set != null) {
