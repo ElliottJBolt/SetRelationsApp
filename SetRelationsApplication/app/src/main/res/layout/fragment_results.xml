@@ -50,9 +50,9 @@
         android:id="@+id/scoreRecylcer"
         android:layout_width="306dp"
         android:layout_height="376dp"
-        android:layout_marginTop="244dp"
+        android:layout_marginTop="208dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.485"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

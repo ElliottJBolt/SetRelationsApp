@@ -71,9 +71,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    interface Communicator{
-        fun passDataCom(questionType: String)
-    }
+
 
     fun signIn(email: String, password: String) {
         d("Elliott","signIn: $email")

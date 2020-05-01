@@ -45,7 +45,8 @@ class QuestionFragment : Fragment() {
         closeFeedback.isVisible = false
 
         val choice = arguments?.getString(Choice)
-        var numAttempts = arguments?.getInt(Attempts)
+        var numAttempts = arguments!!.getInt(Attempts) + 1
+
 
         val dataBase = FirebaseFirestore.getInstance()
 
@@ -73,30 +74,30 @@ class QuestionFragment : Fragment() {
             count++
             result = checkAnswer(matchingType, yes)
 
-
-            if (count < 10) {
-
-                childFragmentManager.beginTransaction().replace(
-                    R.id.feedbackFrame,
-                    FeedbackFragment.newInstance(result, set, choice.toString(), yes)
-                ).disallowAddToBackStack().commit()
-                closeFeedback.isVisible = true
+            childFragmentManager.beginTransaction().replace(
+                R.id.feedbackFrame,
+                FeedbackFragment.newInstance(result, set, choice.toString(), yes)
+            ).disallowAddToBackStack().commit()
+            closeFeedback.isVisible = true
 
 
-                set = generateSet()
-                matchingType = generateQuestion(choice.toString(), set)
+            /**if (count < 10) {
+
+
+            set = generateSet()
+            matchingType = generateQuestion(choice.toString(), set)
 
 
             } else {
-                val score = mapOf(
-                    "score " + numAttempts to numCorrectAnswers
-                )
-                d("Elliott", "$user")
-                dataBase.collection("users").document(userToString).collection("questions")
-                    .document(choice.toString()).update(score)
-                fragmentManager?.popBackStackImmediate()
+            val score = mapOf(
+            "score " + numAttempts to numCorrectAnswers
+            )
+            d("Elliott", "$user")
+            dataBase.collection("users").document(userToString).collection("questions")
+            .document(choice.toString()).update(score)
+            fragmentManager?.popBackStackImmediate()
 
-            }
+            }**/
 
         }
 
@@ -106,40 +107,35 @@ class QuestionFragment : Fragment() {
 
             result = checkAnswer(matchingType, yes)
 
-
-            if (count < 10) {
-
-
-                childFragmentManager.beginTransaction().replace(
-                    R.id.feedbackFrame,
-                    FeedbackFragment.newInstance(result, set, choice.toString(), yes)
-                ).disallowAddToBackStack().commit()
-                closeFeedback.isVisible = true
+            childFragmentManager.beginTransaction().replace(
+                R.id.feedbackFrame,
+                FeedbackFragment.newInstance(result, set, choice.toString(), yes)
+            ).disallowAddToBackStack().commit()
+            closeFeedback.isVisible = true
 
 
-                set = generateSet()
-                matchingType = generateQuestion(choice.toString(), set)
+            /**if (count < 10) {
+
+            set = generateSet()
+            matchingType = generateQuestion(choice.toString(), set)
 
 
             } else {
-                val score = mapOf(
-                    "score " + numAttempts to numCorrectAnswers
-                )
-                d("Elliott", "$user")
-                dataBase.collection("users").document(userToString).collection("questions")
-                    .document(choice.toString()).update(score)
-                fragmentManager?.popBackStackImmediate()
-            }
+            val score = mapOf(
+            "score " + numAttempts to numCorrectAnswers
+            )
+            d("Elliott", "$user")
+            dataBase.collection("users").document(userToString).collection("questions")
+            .document(choice.toString()).update(score)
+            fragmentManager?.popBackStackImmediate()
+            }**/
         }
 
         submitButton.setOnClickListener {
 
-        if (answerInput.text.toString().isNotBlank()||answerInput.text.toString().isNotEmpty()){
-            var userAnswer = answerInput.getText().toString().toInt()
-            count++
-            if (count < 10) {
-
-
+            if (answerInput.text.toString().isNotBlank() || answerInput.text.toString().isNotEmpty()) {
+                var userAnswer = answerInput.getText().toString().toInt()
+                count++
                 childFragmentManager.beginTransaction().replace(
                     R.id.testName,
                     SecondStyleFeedback.newInstance(
@@ -151,22 +147,10 @@ class QuestionFragment : Fragment() {
                 ).disallowAddToBackStack().commit()
                 closeFeedback.isVisible = true
 
-                set = generateSet()
-                matchingType = generateQuestion(choice.toString(), set)
-                //answerInput.text.clear()
 
             } else {
-                val score = mapOf(
-                    "score " + numAttempts to numCorrectAnswers
-                )
-                dataBase.collection("users").document(userToString).collection("questions")
-                    .document(choice.toString()).update(score)
-                fragmentManager?.popBackStackImmediate()
-
+                Toast.makeText(activity, "Please enter an answer", Toast.LENGTH_SHORT).show()
             }
-        }else{
-            Toast.makeText(activity,"Please enter an answer",Toast.LENGTH_SHORT).show()
-        }
 
 
         }
@@ -177,8 +161,101 @@ class QuestionFragment : Fragment() {
             feedbackFrame.removeAllViews()
             testName.removeAllViews()
 
+            if (count < 10) {
+
+                set = generateSet()
+                matchingType = generateQuestion(choice.toString(), set)
+                //answerInput.text.clear()
+
+            } else {
+                val document = dataBase.collection("users").document(user)
+                document.get().addOnSuccessListener { document ->
+                    var stringAttempt: String
+                    var intVal: Int
+                    var abbreviation:String
+
+                    if (choice == "symmetric") {
+                        stringAttempt = document.getString("symmAttempts").toString()
+                        intVal = stringAttempt.toInt()
+                        intVal = increaseAttempts(intVal)
+                        stringAttempt = intVal.toString()
+
+                        val attempts = mapOf(
+                            "symmAttempts" to stringAttempt
+                        )
+
+                        dataBase.collection("users").document(user).update(attempts)
+
+
+                    } else if (choice == "reflexive") {
+                        stringAttempt = document.getString("refAttempts").toString()
+                        intVal = stringAttempt.toInt()
+                        intVal = increaseAttempts(intVal)
+
+                        stringAttempt = intVal.toString()
+
+                        val attempts = mapOf(
+                            "refAttempts" to stringAttempt
+                        )
+
+                        dataBase.collection("users").document(user).update(attempts)
+
+
+                    } else if (choice == "transitive") {
+                        stringAttempt = document.getString("transAttempts").toString()
+                        intVal = stringAttempt.toInt()
+                        intVal = increaseAttempts(intVal)
+
+                        stringAttempt = intVal.toString()
+
+                        val attempts = mapOf(
+                            "transAttempts" to stringAttempt
+                        )
+
+                        dataBase.collection("users").document(user).update(attempts)
+
+
+                    } else {
+                        stringAttempt = document.getString("mixedAttempts").toString()
+                        intVal = stringAttempt.toInt()
+                        intVal = increaseAttempts(intVal)
+
+                        stringAttempt = intVal.toString()
+
+                        val attempts = mapOf(
+                            "mixedAttempts" to stringAttempt
+                        )
+
+                        dataBase.collection("users").document(user).update(attempts)
+
+
+                    }
+
+
+                }
+
+
+                val score = mapOf(
+                    "score " + numAttempts to numCorrectAnswers
+                )
+                dataBase.collection("users").document(userToString).collection("questions")
+                    .document(choice.toString()).update(score)
+                fragmentManager?.popBackStackImmediate()
+
+            }
+
 
         }
+    }
+
+    private fun increaseAttempts(attempts: Int): Int{
+        var attempts = attempts
+        if (attempts != null) {
+            attempts = attempts + 1
+        }
+        return attempts
+
+
     }
 
 
@@ -293,19 +370,19 @@ class QuestionFragment : Fragment() {
 
                 relation = Set_Relation_Generation.relationGenerator(set)
 
-                var transRelation = Set_Relation_Generation.abcTransitive(set,relation)
+                var transRelation = Set_Relation_Generation.abcTransitive(set, relation)
 
                 hiddenValues = InputQuestion.transitive(transRelation)
                 hiddenNums = hiddenValues
 
                 var size = transRelation.size - 1
                 transRelation.removeAt(size)
-                transRelation.removeAt(size-1)
-                transRelation.removeAt(size-2)
-                transRelation.removeAt(size-3)
-                transRelation.removeAt(size-4)
-                transRelation.removeAt(size-5)
-                d("Thing","$transRelation")
+                transRelation.removeAt(size - 1)
+                transRelation.removeAt(size - 2)
+                transRelation.removeAt(size - 3)
+                transRelation.removeAt(size - 4)
+                transRelation.removeAt(size - 5)
+                d("Thing", "$transRelation")
 
 
                 relationVals = transRelation
@@ -320,7 +397,7 @@ class QuestionFragment : Fragment() {
                 relationVals = relation
                 hiddenValues = InputQuestion.reflexive(relation)
                 hiddenNums = hiddenValues
-                formatRelationSecondQuestion(relation,hiddenValues)
+                formatRelationSecondQuestion(relation, hiddenValues)
 
             } else if (type == "symmetric") {
                 relation = Set_Relation_Generation.symmetric(set, relation)

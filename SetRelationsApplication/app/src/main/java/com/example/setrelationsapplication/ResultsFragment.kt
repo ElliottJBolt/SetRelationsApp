@@ -52,16 +52,6 @@ class ResultsFragment : Fragment() {
 
 
 
-        //Users transitive results are loaded in by default before they make a choice
-        /**document = db.collection("users").document(user).collection("questions").document("transitive")
-        getResults(whichResult,document,transCount)
-        d("ScoreList", "$globalScoreList")
-
-        scoreRecylcer.apply {
-            layoutManager = LinearLayoutManager(activity)
-            adapter = ScoresAdapter(globalScoreList)
-        }**/
-
         textRadio.isChecked = true
         scoreGraph.isVisible = false
 
@@ -114,7 +104,7 @@ class ResultsFragment : Fragment() {
 
     fun getResults(result:String,document:DocumentReference,maxCount:Int){
         document.get().addOnSuccessListener { document ->
-                d("results","$result")
+
 
             var count:Int
             var i = 0
@@ -130,9 +120,8 @@ class ResultsFragment : Fragment() {
             do {
                 val testData = document.getLong("score "+count)
                 count++
-                val testString = testData.toString()
+                
                 scoreList.add(testData!!.toInt())
-                //testView.setText("score "+count+": " + testString)
 
             }while (count <= maxCount )
 
@@ -152,7 +141,6 @@ class ResultsFragment : Fragment() {
 
                 i++
             }while (i<scoreList.size)
-            d("theValues","$series1")
             scoreGraph.viewport.isXAxisBoundsManual = true
             scoreGraph.viewport.setMaxX(11.0)
             scoreGraph.viewport.setMinX(1.0)

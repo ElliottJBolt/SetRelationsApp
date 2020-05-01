@@ -56,14 +56,7 @@ class HomeFragment : Fragment() {
 
             transitiveButton.setOnClickListener {
                 choice = "transitive"
-                intTrans = numAttempts(intTrans)
-                transAttempts = intTrans.toString()
 
-                val attempts = mapOf(
-                    "transAttempts" to transAttempts
-                )
-
-                db.collection("users").document(user).update(attempts)
 
                 val questionFragment = QuestionFragment.newInstance(choice,intTrans)
                 replaceFragment(questionFragment)
@@ -72,14 +65,7 @@ class HomeFragment : Fragment() {
 
             symmetricButton.setOnClickListener {
                 choice = "symmetric"
-                intSymm = numAttempts(intSymm)
-                symmAttempts = intSymm.toString()
 
-                val attempts = mapOf(
-                    "symmAttempts" to symmAttempts
-                )
-
-                db.collection("users").document(user).update(attempts)
 
                 val questionFragment = QuestionFragment.newInstance(choice,intSymm)
                 replaceFragment(questionFragment)
@@ -87,14 +73,7 @@ class HomeFragment : Fragment() {
 
             reflexiveButton.setOnClickListener {
                 choice = "reflexive"
-                intRef = numAttempts(intRef)
-                refAttempts = intRef.toString()
 
-                val attempts = mapOf(
-                    "refAttempts" to refAttempts
-                )
-
-                db.collection("users").document(user).update(attempts)
 
                 val questionFragment = QuestionFragment.newInstance(choice,intRef)
                 replaceFragment(questionFragment)
@@ -102,7 +81,7 @@ class HomeFragment : Fragment() {
 
             allButton.setOnClickListener {
                 choice = "all"
-                intMixed = numAttempts(intMixed)
+
 
                 val questionFragment = QuestionFragment.newInstance(choice,intMixed)
                 replaceFragment(questionFragment)
