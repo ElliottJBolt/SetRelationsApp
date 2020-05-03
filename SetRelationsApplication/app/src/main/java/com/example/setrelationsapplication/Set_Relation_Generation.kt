@@ -135,7 +135,6 @@ object Set_Relation_Generation {
 
     fun symmetric(symmetricRelation: MutableList<Int>): MutableList<Int> {
 
-
         var amountOfNumbers = symmetricRelation.size
         var num1: Int
         var num2: Int
@@ -151,14 +150,10 @@ object Set_Relation_Generation {
             i = i + 2
         } while (i <= amountOfNumbers - 2)
         listOfEvenPos.shuffle()
-
-
         i = 0
-
         do {
 
             num1 = symmetricRelation.elementAt(i)
-
             num2 = symmetricRelation.elementAt(i + 1)
 
             if (num1 != num2) {
@@ -170,7 +165,8 @@ object Set_Relation_Generation {
                     listOfDone.add(listOfEvenPos.elementAt(j))
                 } else if (listOfDone.contains(listOfEvenPos.elementAt(j))) {
                     if (num1 !== num2 && i == symmetricRelation.size-2 && i !in listOfDone){
-                        symmetricRelation.set(i,num2)
+                        symmetricRelation.removeAt(i)
+                        symmetricRelation.removeAt(i+1)
                     }
 
                 }else {
@@ -182,11 +178,10 @@ object Set_Relation_Generation {
                     symmetricRelation.set(position + 1, num1)
                 }
             }
-
             i = i + 2
             j = j + 1
             d("i", "$i")
-        } while (i <= amountOfNumbers - 2)
+        } while (i <= amountOfNumbers - 4)
 
         return symmetricRelation
     }
@@ -315,10 +310,8 @@ object Set_Relation_Generation {
     }
 
     fun abcTransitive(set: MutableList<Int>, relation: MutableList<Int>): MutableList<Int> {
-
         var number = Random.nextInt(0, set.size)
         var a = set.elementAt(number)
-
         number = Random.nextInt(0, set.size)
         var b = set.elementAt(number)
 
@@ -328,7 +321,6 @@ object Set_Relation_Generation {
                 b = set.elementAt(number)
             } while (b == a)
         }
-
         number = Random.nextInt(0, set.size)
         var c = set.elementAt(number)
 
@@ -338,16 +330,12 @@ object Set_Relation_Generation {
                 c = set.elementAt(number)
             } while (c == a || c == b)
         }
-
         var positionOne = Random.nextInt(0, relation.size - 1)
-
         if (positionOne.rem(2) == 1) {
             do {
                 positionOne = Random.nextInt(0, relation.size - 1)
             } while (positionOne.rem(2) == 1)
         }
-
-
         relation.set(positionOne, a)
         relation.set(positionOne + 1, b)
 
@@ -357,11 +345,8 @@ object Set_Relation_Generation {
                 positionTwo = Random.nextInt(0, relation.size - 1)
             } while (positionTwo == positionOne || positionTwo.rem(2) == 1)
         }
-
-
         relation.set(positionTwo, b)
         relation.set(positionTwo + 1, c)
-
 
         var positionThree = Random.nextInt(0, relation.size - 1)
         if (positionThree == positionOne || positionThree == positionTwo || positionThree.rem(2) == 1) {
@@ -372,12 +357,8 @@ object Set_Relation_Generation {
                 ) == 1
             )
         }
-
-
         relation.set(positionThree, a)
         relation.set(positionThree + 1, c)
-
-
         //The values and positions are appended to be used with the hidden value questions
         relation.add(a)
         relation.add(b)
@@ -385,10 +366,7 @@ object Set_Relation_Generation {
         relation.add(positionOne)
         relation.add(positionTwo)
         relation.add(positionThree)
-
         return relation
-
     }
-
 
 }

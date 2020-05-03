@@ -48,7 +48,7 @@ object InputQuestion {
     fun symmetric(relation: MutableList<Int>): MutableList<Int> {
         var sizeOfRelation = relation.size
         var i = 0
-        var j = i + 3
+        var j:Int
         var firstNumFirstPair: Int
         var secondNumFirstPair: Int
         var firstNumSecPair: Int

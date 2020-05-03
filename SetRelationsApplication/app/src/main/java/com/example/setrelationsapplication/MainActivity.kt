@@ -80,7 +80,6 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        // [START sign_in_with_email]
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
@@ -94,21 +93,20 @@ class MainActivity : AppCompatActivity() {
                     updateUI(null)
                 }
 
-                // [START_EXCLUDE]
+
                 if (!task.isSuccessful) {
 
                 }
 
-                // [END_EXCLUDE]
+
             }
-        // [END sign_in_with_email]
+
     }
 
     fun createAccount(email: String, password: String) {
         if(!validateForm()) {
             return
         }
-        // [START create_user_with_email]
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
@@ -137,7 +135,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
             }
-        // [END create_user_with_email]
+
     }
 
     private fun validateForm(): Boolean {
@@ -162,7 +160,6 @@ class MainActivity : AppCompatActivity() {
         return valid
 
     }
-
 
 
     private fun updateUI(user: FirebaseUser?){

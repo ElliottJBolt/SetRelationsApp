@@ -105,7 +105,6 @@ class ResultsFragment : Fragment() {
     fun getResults(result:String,document:DocumentReference,maxCount:Int){
         document.get().addOnSuccessListener { document ->
 
-
             var count:Int
             var i = 0
             var series1: LineGraphSeries<DataPoint> = LineGraphSeries()
@@ -149,8 +148,7 @@ class ResultsFragment : Fragment() {
             scoreGraph.viewport.setMaxY(10.0)
 
             scoreGraph.addSeries(series1)
-
-
+            
             }
 
         }

@@ -31,14 +31,14 @@ class FeedbackFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //Variable that were passed to the fragment
+        //Variables that were passed to the fragment
         val result = arguments?.getString(Result)
         val set = arguments?.getIntegerArrayList(SetValues)
         val relation = arguments?.getString(RelationType)
         val answer = arguments?.getBoolean(Answer)
 
         resultText.text = result
-        //textView2.setText(set.toString())
+
 
         Log.d("SetTest", "$set")
 
@@ -50,6 +50,8 @@ class FeedbackFragment : Fragment() {
             root!!.setBackgroundColor(Color.parseColor("#FFCCBB"))
         }else{
             root!!.setBackgroundColor(Color.parseColor("#90EE90"))
+            textView2.text = ""
+            textView3.text = ""
         }
 
         if (result == "Incorrect" && answer == false && relation == "reflexive"){
