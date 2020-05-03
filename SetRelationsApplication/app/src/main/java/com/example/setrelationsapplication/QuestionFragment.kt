@@ -52,7 +52,7 @@ class QuestionFragment : Fragment() {
 
 
         var yes: Boolean
-        d("Elliott", "$choice")
+
         var set = generateSet()
         var matchingType = generateQuestion(choice.toString(), set)
 
@@ -81,23 +81,7 @@ class QuestionFragment : Fragment() {
             closeFeedback.isVisible = true
 
 
-            /**if (count < 10) {
 
-
-            set = generateSet()
-            matchingType = generateQuestion(choice.toString(), set)
-
-
-            } else {
-            val score = mapOf(
-            "score " + numAttempts to numCorrectAnswers
-            )
-            d("Elliott", "$user")
-            dataBase.collection("users").document(userToString).collection("questions")
-            .document(choice.toString()).update(score)
-            fragmentManager?.popBackStackImmediate()
-
-            }**/
 
         }
 
@@ -114,21 +98,7 @@ class QuestionFragment : Fragment() {
             closeFeedback.isVisible = true
 
 
-            /**if (count < 10) {
 
-            set = generateSet()
-            matchingType = generateQuestion(choice.toString(), set)
-
-
-            } else {
-            val score = mapOf(
-            "score " + numAttempts to numCorrectAnswers
-            )
-            d("Elliott", "$user")
-            dataBase.collection("users").document(userToString).collection("questions")
-            .document(choice.toString()).update(score)
-            fragmentManager?.popBackStackImmediate()
-            }**/
         }
 
         submitButton.setOnClickListener {
@@ -294,7 +264,7 @@ class QuestionFragment : Fragment() {
         formatSet(set) //formats the set text
 
         style = Random.nextInt(1, 3)
-        d("Style", "$style")
+
         relation = Set_Relation_Generation.relationGenerator(set)
         if (style == 1) {
             hiddenValues = mutableListOf()
@@ -340,7 +310,7 @@ class QuestionFragment : Fragment() {
                 typeOrNot = Random.nextInt(0, 2)
 
                 if (typeOrNot == 1) {
-                    relation = Set_Relation_Generation.symmetric(set, relation)
+                    relation = Set_Relation_Generation.symmetric(relation)
                     formatRelation(relation)
                     matchingType = true
 
@@ -364,7 +334,7 @@ class QuestionFragment : Fragment() {
             yesButton.isVisible = false
             noButton.isVisible = false
 
-            questionText.text = "Fill in the missing to make the relation " + choice
+            questionText.text = "Enter the missing value to make the relation " + choice
 
             if (type == "transitive") {
 
@@ -400,7 +370,7 @@ class QuestionFragment : Fragment() {
                 formatRelationSecondQuestion(relation, hiddenValues)
 
             } else if (type == "symmetric") {
-                relation = Set_Relation_Generation.symmetric(set, relation)
+                relation = Set_Relation_Generation.symmetric(relation)
                 relationVals = relation
                 hiddenValues = InputQuestion.symmetric(relation)
                 hiddenNums = hiddenValues

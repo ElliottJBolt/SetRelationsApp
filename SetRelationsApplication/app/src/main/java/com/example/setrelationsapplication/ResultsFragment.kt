@@ -120,7 +120,7 @@ class ResultsFragment : Fragment() {
             do {
                 val testData = document.getLong("score "+count)
                 count++
-                
+
                 scoreList.add(testData!!.toInt())
 
             }while (count <= maxCount )

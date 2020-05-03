@@ -49,10 +49,10 @@ class HomeFragment : Fragment() {
                 mixedAttempts = document.getString("mixedAttempts").toString()
 
             var choice : String
-            var intTrans = transAttempts.toInt()
-            var intSymm = symmAttempts.toInt()
-            var intRef = refAttempts.toInt()
-            var intMixed = mixedAttempts.toInt()
+            var intTrans:Int = transAttempts.toInt()
+            var intSymm:Int = symmAttempts.toInt()
+            var intRef:Int = refAttempts.toInt()
+            var intMixed:Int = mixedAttempts.toInt()
 
             transitiveButton.setOnClickListener {
                 choice = "transitive"
@@ -88,11 +88,18 @@ class HomeFragment : Fragment() {
             }
 
             resultsButton.setOnClickListener {
+                transAttempts = document.getString("transAttempts").toString()
+                refAttempts = document.getString("refAttempts").toString()
+                symmAttempts = document.getString("symmAttempts").toString()
+                mixedAttempts = document.getString("mixedAttempts").toString()
+                intTrans = transAttempts.toInt()
+                 intSymm = symmAttempts.toInt()
+                 intRef = refAttempts.toInt()
+                 intMixed = mixedAttempts.toInt()
                 val resultFragment = ResultsFragment.newInstance(user,intTrans,intSymm,intRef,intMixed)
                 replaceFragment(resultFragment)
             }
         }
-
 
 
 
