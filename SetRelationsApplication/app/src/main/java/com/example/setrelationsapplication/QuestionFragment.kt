@@ -70,7 +70,7 @@ class QuestionFragment : Fragment() {
 
             childFragmentManager.beginTransaction().replace(
                 R.id.feedbackFrame,
-                FeedbackFragment.newInstance(result, set, choice.toString(), yes)
+                FeedbackFragment.newInstance(result, set, relationType, yes)
             ).disallowAddToBackStack().commit()
             closeFeedback.isVisible = true
 
@@ -85,7 +85,7 @@ class QuestionFragment : Fragment() {
 
             childFragmentManager.beginTransaction().replace(
                 R.id.feedbackFrame,
-                FeedbackFragment.newInstance(result, set, choice.toString(), yes)
+                FeedbackFragment.newInstance(result, set, relationType, yes)
             ).disallowAddToBackStack().commit()
             closeFeedback.isVisible = true
 
@@ -190,7 +190,6 @@ class QuestionFragment : Fragment() {
                     }
 
                 }
-
 
                 val score = mapOf(
                     "score " + numAttempts to numCorrectAnswers

@@ -58,7 +58,7 @@ class FeedbackFragment : Fragment() {
         if (result == "Incorrect" && answer == false && relation == "reflexive"){
             Log.d("textTest", "YYYY")
             if (set != null) {
-                textView2.setText("This was a " + relation + "relation")
+                textView2.setText("This was a " + relation + " relation")
                 textView3.text = "There exists the pairs: "
                 formatFeedback(set)
             }
@@ -66,7 +66,7 @@ class FeedbackFragment : Fragment() {
 
         }else if (result == "Incorrect" && answer == true && relation == "reflexive"){
             if (set != null) {
-                textView2.setText("This was not a " + relation + "relation")
+                textView2.setText("This was not a " + relation + " relation")
                 textView3.text = "Not all the following pairs are present:  "
                 formatFeedback(set)
             }
@@ -75,7 +75,7 @@ class FeedbackFragment : Fragment() {
         }else if (result == "Incorrect" && answer == false && relation == "symmetric"){
 
             if (set != null) {
-                textView2.setText("This was a " + relation + "relation")
+                textView2.setText("This was a " + relation + " relation")
                 textView3.text = "There was both an (a,b) pair and a (b,a) pair "
                 //formatFeedback(set)
             }
@@ -83,21 +83,21 @@ class FeedbackFragment : Fragment() {
 
         }else if (result == "Incorrect" && answer == true && relation == "symmetric"){
             if (set != null) {
-                textView2.setText("This was not a " + relation + "relation")
+                textView2.setText("This was not a " + relation + " relation")
                 textView3.text = "If a pair (a,b) exists in the relation then (b,a) must also exist in the relation "
                 //formatFeedback(set)
             }
 
         }else if (result == "Incorrect" && answer == false && relation == "transitive"){
             if (set != null) {
-                textView2.setText("This was a " + relation + "relation")
+                textView2.setText("This was a " + relation + " relation")
                 textView3.text = "There exists an (a,b), (b,c) and a (a,c) pair"
                 //formatFeedback(set)
             }
 
         }else if (result == "Incorrect" && answer == true && relation == "transitive"){
             if (set != null) {
-                textView2.setText("This was not a " + relation + "relation")
+                textView2.setText("This was not a " + relation + " relation")
                 textView3.text = "If (a,b) and (b,c) exist then so must (a,c) to be transitive "
                 //formatFeedback(set)
             }

@@ -80,7 +80,7 @@ class HomeFragment : Fragment() {
             }
 
             allButton.setOnClickListener {
-                choice = "all"
+                choice = "mixed"
 
 
                 val questionFragment = QuestionFragment.newInstance(choice,intMixed)
