@@ -25,6 +25,7 @@ class QuestionFragment : Fragment() {
     private var hiddenNums: MutableList<Int> = mutableListOf()
     private var positionOfNum: Int = 0
     private var relationVals: MutableList<Int> = mutableListOf()
+    private var relationType:String = ""
 
 
     override fun onCreateView(
@@ -44,7 +45,7 @@ class QuestionFragment : Fragment() {
         val user = (activity as ApplicationActivity).getUser()
         closeFeedback.isVisible = false
 
-        val choice = arguments?.getString(Choice)
+        var choice = arguments!!.getString(Choice)!!
         var numAttempts = arguments!!.getInt(Attempts) + 1
 
 
@@ -209,7 +210,7 @@ class QuestionFragment : Fragment() {
      * @param attempts the current number of times questions have been answered
      * @return the new number of attempts
      */
-    private fun increaseAttempts(attempts: Int): Int{
+    private fun increaseAttempts(attempts: Int): Int {
         var attempts = attempts
         if (attempts != null) {
             attempts = attempts + 1
@@ -255,7 +256,7 @@ class QuestionFragment : Fragment() {
 
         val style: Int
         var typeOrNot: Int
-        var choice = arguments?.getString(Choice)
+        relationType = arguments?.getString(Choice).toString()
 
         var matchingType = true
 
@@ -274,7 +275,7 @@ class QuestionFragment : Fragment() {
             noButton.isVisible = true
             yesButton.isVisible = true
 
-            questionText.text = "Is the following Relation (R) on Set (A) " + choice
+
             if (type == "transitive") {
                 //relation = Set_Relation_Generation.relationGenerator(set)
                 formatRelation(relation)
@@ -323,11 +324,54 @@ class QuestionFragment : Fragment() {
                 }
 
 
+
             } else {
                 //for mixed questions
-                typeOrNot = Random.nextInt(1, 2)
+                typeOrNot = Random.nextInt(0, 2)
+                var quesType = Random.nextInt(1, 3)
+
+                if (typeOrNot == 1 && quesType == 1) {
+                    relationType = "symmetric"
+                    relation = Set_Relation_Generation.symmetric(relation)
+                    formatRelation(relation)
+                    matchingType = true
+
+                } else if (typeOrNot == 1 && quesType == 2) {
+                    relationType = "reflexive"
+                    relation = Set_Relation_Generation.reflexive(set,relation)
+                    formatRelation(relation)
+                    matchingType = true
+
+                } else if (typeOrNot == 1 && quesType == 3 ) {
+                    relationType = "transitive"
+                    formatRelation(relation)
+                    var trans = Set_Relation_Generation.transitive(relation)
+
+                    if (trans == true) {
+                        matchingType = true
+                        return matchingType
+
+                    } else {
+                        matchingType = false
+                        return matchingType
+                    }
+
+                } else {
+                    var titleRelation = Random.nextInt(1,3)
+                    if (titleRelation == 1){
+                        relationType = "transitive"
+                    }else if (titleRelation == 2){
+                        relationType = "reflexive"
+                    }else{
+                        relationType = "symmetric"
+                    }
+                    relation = Set_Relation_Generation.relationGenerator(set)
+                    formatRelation(relation)
+                    matchingType = false
+                }
 
             }
+            questionText.text = "Is the following Relation (R) on Set (A) " + relationType
 
         } else {
             submitButton.isVisible = true
@@ -335,7 +379,7 @@ class QuestionFragment : Fragment() {
             yesButton.isVisible = false
             noButton.isVisible = false
 
-            questionText.text = "Enter the missing value to make the relation " + choice
+
 
             if (type == "transitive") {
 
@@ -353,11 +397,8 @@ class QuestionFragment : Fragment() {
                 transRelation.removeAt(size - 3)
                 transRelation.removeAt(size - 4)
                 transRelation.removeAt(size - 5)
-                d("Thing", "$transRelation")
-
 
                 relationVals = transRelation
-
 
 
                 formatRelationSecondQuestion(transRelation, hiddenValues)
@@ -378,7 +419,52 @@ class QuestionFragment : Fragment() {
                 formatRelationSecondQuestion(relation, hiddenValues)
 
 
+            }else{
+                var quesType = Random.nextInt(0, 3)
+                if (quesType == 1){
+                    relationType = "symmetric"
+                    relation = Set_Relation_Generation.symmetric(relation)
+                    relationVals = relation
+                    hiddenValues = InputQuestion.symmetric(relation)
+                    hiddenNums = hiddenValues
+                    formatRelationSecondQuestion(relation, hiddenValues)
+
+
+
+                }else if (quesType == 2){
+                    relationType = "reflexive"
+                    relation = Set_Relation_Generation.reflexive(set, relation)
+                    relationVals = relation
+                    hiddenValues = InputQuestion.reflexive(relation)
+                    hiddenNums = hiddenValues
+                    formatRelationSecondQuestion(relation, hiddenValues)
+
+                }else {
+                    relationType = "transitive"
+                    relation = Set_Relation_Generation.relationGenerator(set)
+
+                    var transRelation = Set_Relation_Generation.abcTransitive(set, relation)
+
+                    hiddenValues = InputQuestion.transitive(transRelation)
+                    hiddenNums = hiddenValues
+
+                    var size = transRelation.size - 1
+                    transRelation.removeAt(size)
+                    transRelation.removeAt(size - 1)
+                    transRelation.removeAt(size - 2)
+                    transRelation.removeAt(size - 3)
+                    transRelation.removeAt(size - 4)
+                    transRelation.removeAt(size - 5)
+                    d("Thing", "$transRelation")
+
+                    relationVals = transRelation
+
+
+                    formatRelationSecondQuestion(transRelation, hiddenValues)
+
+                }
             }
+            questionText.text = "Enter the missing value to make the relation " + relationType
         }
         return matchingType
     }
