@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.fragment_results.*
 import kotlinx.android.synthetic.main.row_score.*
 
 /**
- * A simple [Fragment] subclass.
+ * Fragment to show the users results
  */
 class ResultsFragment : Fragment() {
 
@@ -46,10 +46,8 @@ class ResultsFragment : Fragment() {
         val refCount = arguments!!.getInt(reflexiveCount)
         val mixedCount = arguments!!.getInt(mixedCount)
         val db =FirebaseFirestore.getInstance()
-        var whichResult = "transitive"
+
         var document:DocumentReference
-
-
 
 
         textRadio.isChecked = true
@@ -69,40 +67,43 @@ class ResultsFragment : Fragment() {
 
 
 
-
-
         transButton.setOnClickListener {
             scoreGraph.removeAllSeries()
-            whichResult = "transitive"
+
             document = db.collection("users").document(user).collection("questions").document("transitive")
-            getResults(whichResult,document,transCount)
+            getResults(document,transCount)
 
 
         }
         symmButton.setOnClickListener {
             scoreGraph.removeAllSeries()
-            whichResult = "symmetric"
+
             document = db.collection("users").document(user).collection("questions").document("symmetric")
-            getResults(whichResult,document,symmCount)
+            getResults(document,symmCount)
         }
         refButton.setOnClickListener {
             scoreGraph.removeAllSeries()
-            whichResult = "reflexive"
+
             document = db.collection("users").document(user).collection("questions").document("reflexive")
-            getResults(whichResult,document,refCount)
+            getResults(document,refCount)
         }
         mixedButton.setOnClickListener {
             scoreGraph.removeAllSeries()
-            whichResult = "mixed"
+
             document = db.collection("users").document(user).collection("questions").document("mixed")
-            getResults(whichResult,document,mixedCount)
+            getResults(document,mixedCount)
         }
 
 
 
     }
 
-    fun getResults(result:String,document:DocumentReference,maxCount:Int){
+    /**
+     * Function to get results from the database and display them
+     * @param document the document the data is read from
+     * @param maxCount the number of times a user has attempted questions for that relation type
+     */
+    fun getResults(document:DocumentReference,maxCount:Int){
         document.get().addOnSuccessListener { document ->
 
             var count:Int
@@ -148,7 +149,7 @@ class ResultsFragment : Fragment() {
             scoreGraph.viewport.setMaxY(10.0)
 
             scoreGraph.addSeries(series1)
-            
+
             }
 
         }

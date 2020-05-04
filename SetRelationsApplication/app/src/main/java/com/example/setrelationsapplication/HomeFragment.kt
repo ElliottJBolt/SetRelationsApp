@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 
 /**
- * A simple [Fragment] subclass.
+ * The homepage fragment
  */
 class HomeFragment : Fragment() {
 
@@ -105,19 +105,14 @@ class HomeFragment : Fragment() {
 
     }
 
+    /**
+     * Function to replace fragment
+     *
+     * @param  fragment The fragment that will be swapped to
+     */
     private fun replaceFragment(fragment: Fragment){
         fragmentManager?.beginTransaction()?.replace(R.id.frameLayout, fragment)?.addToBackStack(null)
             ?.commit()
-
-    }
-
-    private fun numAttempts(attempts: Int): Int{
-        var attempts = attempts
-        if (attempts != null) {
-            attempts = attempts + 1
-        }
-        return attempts
-
 
     }
 

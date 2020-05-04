@@ -12,7 +12,7 @@ import androidx.core.view.isVisible
 import kotlinx.android.synthetic.main.fragment_feedback_fragment_two.*
 
 /**
- * A simple [Fragment] subclass.
+ * Fragment to create feedback for missing value style questions
  */
 class SecondStyleFeedback : Fragment() {
     private var root: View? = null

@@ -7,6 +7,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.row_score.view.*
 
+/**
+ * Adapted for the scores recycler view
+ */
 class ScoresAdapter(val scores:MutableList<Int>) : RecyclerView.Adapter<ScoresAdapter.ViewHolder>(){
 
     class ViewHolder(val view: View):RecyclerView.ViewHolder(view)

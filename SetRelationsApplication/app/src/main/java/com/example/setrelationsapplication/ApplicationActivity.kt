@@ -9,6 +9,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_application.*
 import kotlinx.android.synthetic.main.content_application.*
 
+/**
+ * Class to create the home activity
+ *
+ */
 class ApplicationActivity : AppCompatActivity() {
     val db = FirebaseFirestore.getInstance()
 
@@ -25,6 +29,11 @@ class ApplicationActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * function to get the user
+     *
+     * @return The users email adress
+     */
     fun getUser():String{
         val profileName=intent.getStringExtra("user")
         Log.d("user", "$profileName")
@@ -32,10 +41,7 @@ class ApplicationActivity : AppCompatActivity() {
 
     }
 
-    fun getDB(){
-        val db = FirebaseFirestore.getInstance()
 
-    }
 
 
 

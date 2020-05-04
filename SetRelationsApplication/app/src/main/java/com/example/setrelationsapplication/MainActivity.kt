@@ -14,6 +14,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
+/**
+ * Class to create the login activity
+ */
 class MainActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
@@ -31,7 +34,6 @@ class MainActivity : AppCompatActivity() {
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
         // Access a Cloud Firestore instance from your Activity
-
 
 
         logInButton.setOnClickListener {
@@ -72,7 +74,12 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
+    /**
+     * Function to handle sign in
+     *
+     * @param email the users email
+     * @param password the users password
+     */
     fun signIn(email: String, password: String) {
         d("Elliott","signIn: $email")
 
@@ -103,6 +110,12 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * function to create an account
+     *
+     * @param email the email the user has entered
+     * @param password the password the user has entered
+     */
     fun createAccount(email: String, password: String) {
         if(!validateForm()) {
             return
@@ -138,6 +151,11 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * function to validate the users entry
+     * @return whether the details are valid or not
+     */
+
     private fun validateForm(): Boolean {
         var valid = true
 
@@ -161,7 +179,10 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
+    /**
+     * function to change the activity
+     * @param user the users account
+     */
     private fun updateUI(user: FirebaseUser?){
 
         if (user != null) {

@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.fragment_feedback.*
 import kotlinx.android.synthetic.main.fragment_question.*
 
 /**
- * A simple [Fragment] subclass.
+ * Fragment to generate feedback for the yes/no style questions
  */
 class FeedbackFragment : Fragment() {
 
@@ -46,6 +46,7 @@ class FeedbackFragment : Fragment() {
         Log.d("textTest", "$answer")
         Log.d("textTest", "$result")
 
+        //Sets the background colour of the feedback fragment
         if (result == "Incorrect"){
             root!!.setBackgroundColor(Color.parseColor("#FFCCBB"))
         }else{
@@ -106,13 +107,17 @@ class FeedbackFragment : Fragment() {
 
     }
 
+    /**
+     * Function to format the feedback
+     *
+     * @param set The set which was used for the question
+     */
     private fun formatFeedback( set:ArrayList<Int>){
         var i = 0
 
         if (set != null) {
 
             do {
-
 
                 textView3.text = textView3.text as String +"("  + set.elementAt(i) + "," +set.elementAt(i)+ ")"
                 i++

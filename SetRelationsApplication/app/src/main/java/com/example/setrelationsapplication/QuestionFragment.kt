@@ -17,7 +17,7 @@ import kotlin.random.Random
 
 
 /**
- * A simple [Fragment] subclass.
+ * Fragment for generating questions
  */
 class QuestionFragment : Fragment() {
     private var root: View? = null
@@ -61,13 +61,6 @@ class QuestionFragment : Fragment() {
         val userToString = user.toString()
         var result: String
 
-
-
-
-
-
-
-
         yesButton.setOnClickListener {
             yes = true
 
@@ -79,8 +72,6 @@ class QuestionFragment : Fragment() {
                 FeedbackFragment.newInstance(result, set, choice.toString(), yes)
             ).disallowAddToBackStack().commit()
             closeFeedback.isVisible = true
-
-
 
 
         }
@@ -96,8 +87,6 @@ class QuestionFragment : Fragment() {
                 FeedbackFragment.newInstance(result, set, choice.toString(), yes)
             ).disallowAddToBackStack().commit()
             closeFeedback.isVisible = true
-
-
 
         }
 
@@ -135,14 +124,13 @@ class QuestionFragment : Fragment() {
 
                 set = generateSet()
                 matchingType = generateQuestion(choice.toString(), set)
-                //answerInput.text.clear()
+
 
             } else {
                 val document = dataBase.collection("users").document(user)
                 document.get().addOnSuccessListener { document ->
                     var stringAttempt: String
                     var intVal: Int
-                    var abbreviation:String
 
                     if (choice == "symmetric") {
                         stringAttempt = document.getString("symmAttempts").toString()
@@ -198,9 +186,7 @@ class QuestionFragment : Fragment() {
 
                         dataBase.collection("users").document(user).update(attempts)
 
-
                     }
-
 
                 }
 
@@ -218,6 +204,11 @@ class QuestionFragment : Fragment() {
         }
     }
 
+    /**
+     * function to keep track of the amount of questions completed
+     * @param attempts the current number of times questions have been answered
+     * @return the new number of attempts
+     */
     private fun increaseAttempts(attempts: Int): Int{
         var attempts = attempts
         if (attempts != null) {
@@ -245,11 +236,21 @@ class QuestionFragment : Fragment() {
 
     }
 
+    /**
+     * Function to generate set
+     * @return the generated set
+     */
     fun generateSet(): MutableList<Int> {
         var set = Set_Relation_Generation.setGenerator()
         return set
     }
 
+    /**
+     * Function to generate question
+     * @param type the type of relation the user chose
+     * @param set the set that was created for the question
+     * @return whether the relation generated matches the type of relation chosen
+     */
     fun generateQuestion(type: String, set: MutableList<Int>): Boolean {
 
         val style: Int
@@ -382,6 +383,12 @@ class QuestionFragment : Fragment() {
         return matchingType
     }
 
+    /**
+     * Function to check whether the users answer for yes/no style questions
+     * @param matchingType whether the relation generated matches the relation chosen
+     * @param choice the users answer to the question
+     * @return returns incorrect or correct
+     */
     fun checkAnswer(matchingType: Boolean, choice: Boolean): String {
         var result: String
 
@@ -397,6 +404,10 @@ class QuestionFragment : Fragment() {
         return result
     }
 
+    /**
+     * Function to format set for yes/no questions
+     * @param set the set that was generated
+     */
     fun formatSet(set: MutableList<Int>) {
         val set = set
         var j = 0
@@ -413,6 +424,10 @@ class QuestionFragment : Fragment() {
 
     }
 
+    /**
+     * Function to format the relation
+     * @param relation the relation that was generated
+     */
     fun formatRelation(relation: MutableList<Int>) {
         val relation = relation
         var i = 0
@@ -433,6 +448,11 @@ class QuestionFragment : Fragment() {
 
     }
 
+    /**
+     * Function to format the hidden value questions
+     * @param relation the relation generated
+     * @param hiddenValues the list of possible hidden values that were chosen
+     */
     fun formatRelationSecondQuestion(relation: MutableList<Int>, hiddenValues: MutableList<Int>) {
         var valueOne: Int
         var position = Random.nextInt(3, 4)

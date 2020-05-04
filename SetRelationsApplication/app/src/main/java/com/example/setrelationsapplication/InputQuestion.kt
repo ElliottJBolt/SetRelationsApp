@@ -3,8 +3,19 @@ package com.example.setrelationsapplication
 import android.util.Log
 import kotlin.random.Random
 
+/**
+ * Object to hold functions to choose hidden values
+ */
+
 object InputQuestion {
 
+
+    /**
+     * function to choose reflexive hidden value
+     *
+     * @param relation the relation which the value can be chosen from
+     * @return A list of possible hidden values and their location
+     */
     fun reflexive(relation: MutableList<Int>): MutableList<Int> {
         var sizeOfSet = relation.size
         var value = Random.nextInt(0, sizeOfSet)
@@ -45,6 +56,13 @@ object InputQuestion {
         return listOfValuesAndPos
     }
 
+
+    /**
+     * Function to choose symmetric hidden values
+     *
+     * @param relation the relation that the values can be chosen from
+     * @return the possible hidden values and their position
+     */
     fun symmetric(relation: MutableList<Int>): MutableList<Int> {
         var sizeOfRelation = relation.size
         var i = 0
@@ -87,6 +105,13 @@ object InputQuestion {
 
         return listOfValuesAndPos
     }
+
+    /**
+     * Function to choose transitive hidden values
+     *
+     * @param relation the relation the values can be chosen from
+     * @return the possible hidden values and their position
+     */
 
     fun transitive(relation: MutableList<Int>): MutableList<Int> {
         var whichNum = Random.nextInt(1, 4)

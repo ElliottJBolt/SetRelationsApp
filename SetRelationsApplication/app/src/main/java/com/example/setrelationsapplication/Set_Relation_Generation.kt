@@ -3,6 +3,9 @@ package com.example.setrelationsapplication
 import android.util.Log.d
 import kotlin.random.Random
 
+/**
+ *
+ */
 object Set_Relation_Generation {
     private var globalA: Int = 0
     private var globalB: Int = 0
@@ -30,6 +33,12 @@ object Set_Relation_Generation {
 
     }
 
+    /**
+     * Function to check for repeated numbers in the set
+     * @param values the values currently in the set
+     * @param nextValue the next value to be added to the list
+     * @return the next value
+     */
     fun checkRepeated(values: MutableList<Int>, nextValue: Int): Int {
         var nextValue = nextValue
         if (values.contains(nextValue)) {
@@ -45,6 +54,11 @@ object Set_Relation_Generation {
 
     }
 
+    /**
+     * Function to generate a relation
+     * @param values the set the relation will be created from
+     * @return the relation
+     */
     fun relationGenerator(values: MutableList<Int>): MutableList<Int> {
         val lengthOfSet = values.size
         val createdRelation: MutableList<Int> = mutableListOf<Int>()
@@ -84,6 +98,12 @@ object Set_Relation_Generation {
         return createdRelation
     }
 
+    /**
+     * Function to generate reflexive relations
+     * @param values the set
+     * @param allReflexiveNum the relation
+     * @return the reflexive relation
+     */
     fun reflexive(values: MutableList<Int>, allReflexiveNum: MutableList<Int>): MutableList<Int> {
         var lengthOfSet = values.size
         var listOfPositions = mutableListOf<Int>()
@@ -133,6 +153,11 @@ object Set_Relation_Generation {
 
     }
 
+    /**
+     * Function to generate symmetric relations
+     * @param symmetricRelation the relation
+     * @return the symmetric relation
+     */
     fun symmetric(symmetricRelation: MutableList<Int>): MutableList<Int> {
 
         var amountOfNumbers = symmetricRelation.size
@@ -185,6 +210,12 @@ object Set_Relation_Generation {
 
         return symmetricRelation
     }
+
+    /**
+     * Function to generate transitive relations
+     * @param relation the relation
+     * @return whether the relation is transitve or not
+     */
 
     fun transitive(relation: MutableList<Int>): Boolean {
         //var lengthOfSet = values.size
@@ -309,6 +340,12 @@ object Set_Relation_Generation {
 
     }
 
+    /**
+     * Function to generate guaranteed transitive relations
+     * @param set the set
+     * @param relation the relation
+     * @return the transitive relation and the values of a,b,c and their positions
+     */
     fun abcTransitive(set: MutableList<Int>, relation: MutableList<Int>): MutableList<Int> {
         var number = Random.nextInt(0, set.size)
         var a = set.elementAt(number)
