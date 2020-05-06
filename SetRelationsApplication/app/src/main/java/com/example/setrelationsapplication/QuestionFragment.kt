@@ -268,26 +268,25 @@ class QuestionFragment : Fragment() {
 
         relation = Set_Relation_Generation.relationGenerator(set)
         if (style == 1) {
-            hiddenValues = mutableListOf()
+
             submitButton.isVisible = false
             answerInput.isVisible = false
             noButton.isVisible = true
             yesButton.isVisible = true
 
-
             if (type == "transitive") {
-                //relation = Set_Relation_Generation.relationGenerator(set)
+
                 formatRelation(relation)
                 var trans = Set_Relation_Generation.transitive(relation)
 
 
                 if (trans == true) {
                     matchingType = true
-                    return matchingType
+                    //return matchingType
 
                 } else {
                     matchingType = false
-                    return matchingType
+                    //return matchingType
 
                 }
 
@@ -370,9 +369,10 @@ class QuestionFragment : Fragment() {
                 }
 
             }
-            questionText.text = "Is the following Relation (R) on Set (A) " + relationType
 
+            questionText.text = "Is the following Relation (R) on Set (A) " + relationType
         } else {
+
             submitButton.isVisible = true
             answerInput.isVisible = true
             yesButton.isVisible = false
@@ -464,6 +464,7 @@ class QuestionFragment : Fragment() {
                 }
             }
             questionText.text = "Enter the missing value to make the relation " + relationType
+
         }
         return matchingType
     }

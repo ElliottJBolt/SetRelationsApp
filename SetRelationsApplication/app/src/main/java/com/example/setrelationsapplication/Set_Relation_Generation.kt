@@ -175,6 +175,7 @@ object Set_Relation_Generation {
             i = i + 2
         } while (i <= amountOfNumbers - 2)
         listOfEvenPos.shuffle()
+
         i = 0
         do {
 
@@ -182,16 +183,15 @@ object Set_Relation_Generation {
             num2 = symmetricRelation.elementAt(i + 1)
 
             if (num1 != num2) {
-
                 position = listOfEvenPos.elementAt(j)
 
                 if (listOfEvenPos.elementAt(j) == i ) {
                     symmetricRelation.set(i + 1, symmetricRelation.elementAt(i))
                     listOfDone.add(listOfEvenPos.elementAt(j))
                 } else if (listOfDone.contains(listOfEvenPos.elementAt(j))) {
-                    if (num1 !== num2 && i == symmetricRelation.size-2 && i !in listOfDone){
+                    if (num1 !== num2  && listOfEvenPos.elementAt(j) !in listOfDone){
                         symmetricRelation.removeAt(i)
-                        symmetricRelation.removeAt(i+1)
+                        symmetricRelation.removeAt(i)
                     }
 
                 }else {
@@ -205,8 +205,8 @@ object Set_Relation_Generation {
             }
             i = i + 2
             j = j + 1
-            d("i", "$i")
-        } while (i <= amountOfNumbers - 4)
+
+        } while (i <= amountOfNumbers - 2)
 
         return symmetricRelation
     }

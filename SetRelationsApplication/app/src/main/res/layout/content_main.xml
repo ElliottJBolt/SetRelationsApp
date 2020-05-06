@@ -57,6 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="88dp"
         android:text="Username"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -67,6 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="184dp"
         android:text="Password"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
